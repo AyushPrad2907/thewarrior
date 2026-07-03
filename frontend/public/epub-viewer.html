@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPUB Reader</title>
+    <script src="https://cdn.jsdelivr.net/npm/epubjs/dist/epub.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #viewer {
+            flex: 1;
+            width: 100%;
+            height: 100%;
+        }
+
+        .epub-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: #d4af37;
+            font-size: 18px;
+        }
+
+        .error {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: #f87171;
+            font-size: 18px;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="viewer"></div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const bookUrl = urlParams.get('book');
+
+        if (bookUrl) {
+            const book = ePub(bookUrl);
+            const rendition = book.renderTo('viewer', {
+                width: '100%',
+                height: '100%',
+                spread: 'none'
+            });
+
+            rendition.display()
+                .then(() => {
+                    console.log('EPUB loaded successfully');
+                })
+                .catch((error) => {
+                    console.error('Error loading EPUB:', error);
+                    document.getElementById('viewer').innerHTML = 
+                        '<div class="error">Error loading EPUB file. Please try again.</div>';
+                });
+        } else {
+            document.getElementById('viewer').innerHTML = 
+                '<div class="error">No book URL provided</div>';
+        }
+    </script>
+</body>
+</html>

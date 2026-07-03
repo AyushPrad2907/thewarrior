@@ -1,0 +1,116 @@
+import { useState, useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { booksAPI } from '../services/api';
+import LoadingSpinner from '../components/LoadingSpinner';
+import './BookDetails.css';
+
+const BookDetails = () => {
+  const { id } = useParams();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [book, setBook] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [isPurchased, setIsPurchased] = useState(false);
+
+  useEffect(() => {
+    fetchBookDetails();
+  }, [id, user]);
+
+  const fetchBookDetails = async () => {
+    try {
+      const response = await booksAPI.getById(id);
+      setBook(response.data.book);
+      
+      // Check if user has purchased this book
+      if (user && user.purchasedBooks) {
+        setIsPurchased(user.purchasedBooks.some(purchasedBook => purchasedBook._id === id));
+      }
+    } catch (error) {
+      console.error('Error fetching book details:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleReadPreview = () => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+    navigate(`/reader/${id}/preview`);
+  };
+
+  const handleReadFull = () => {
+    navigate(`/reader/${id}/full`);
+  };
+
+  const handlePurchase = () => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+    navigate(`/payment/${id}`);
+  };
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
+  if (!book) {
+    return (
+      <div className="book-details-container">
+        <div className="error-message">Book not found</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="book-details-container">
+      <div className="book-details glass">
+        <div className="book-cover-section">
+          <img 
+            src={`http://localhost:5000/${book.coverImage}`} 
+            alt={book.title}
+            className="detail-cover"
+          />
+        </div>
+
+        <div className="book-info-section">
+          <h1 className="detail-title">{book.title}</h1>
+          <p className="detail-author">by {book.author}</p>
+          <div className="detail-meta">
+            <span className="detail-category">{book.category}</span>
+            <span className="detail-price">₹{book.price}</span>
+          </div>
+
+          <p className="detail-description">{book.description}</p>
+
+          <div className="detail-actions">
+            <button onClick={handleReadPreview} className="btn btn-secondary">
+              Read Preview
+            </button>
+            
+            {isPurchased ? (
+              <button onClick={handleReadFull} className="btn btn-primary">
+                Read Full Book
+              </button>
+            ) : (
+              <button onClick={handlePurchase} className="btn btn-primary">
+                Purchase for ₹{book.price}
+              </button>
+            )}
+          </div>
+
+          {isPurchased && (
+            <div className="purchased-badge">
+              ✓ Purchased
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default BookDetails;

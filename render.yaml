@@ -1,0 +1,32 @@
+services:
+  # Backend Service
+  - type: web
+    name: thewarrior-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: PORT
+        value: 5000
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false # Set this in Render dashboard
+      - key: JWT_SECRET
+        sync: false # Set this in Render dashboard
+      - key: JWT_EXPIRE
+        value: 7d
+      - key: FRONTEND_URL
+        sync: false # Set this to frontend URL after deployment
+
+  # Frontend Service
+  - type: site
+    name: thewarrior-frontend
+    env: static
+    rootDir: frontend
+    buildCommand: npm run build
+    publishDir: dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false # Set this to backend URL after deployment
