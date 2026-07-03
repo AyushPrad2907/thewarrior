@@ -6,9 +6,9 @@ const Footer = () => {
     <footer className="footer glass">
       <div className="footer-container">
         <div className="footer-section">
-          <h3 className="footer-title">THE WARRIOR</h3>
+          <h3 className="footer-title">THE WARRIOR IN YOU</h3>
           <p className="footer-description">
-            Premium ebook platform with exclusive content and a powerful referral networking system.
+            Premium ebook platform with exclusive content, a powerful referral system, and a single featured book experience.
           </p>
         </div>
 
@@ -33,15 +33,15 @@ const Footer = () => {
         <div className="footer-section">
           <h4 className="footer-heading">Legal</h4>
           <ul className="footer-links">
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Terms of Service</a></li>
-            <li><a href="#">Refund Policy</a></li>
+            <li><a href="mailto:support@warrior.com?subject=Privacy%20Policy">Privacy Policy</a></li>
+            <li><a href="mailto:support@warrior.com?subject=Terms%20of%20Service">Terms of Service</a></li>
+            <li><a href="mailto:support@warrior.com?subject=Refund%20Policy">Refund Policy</a></li>
           </ul>
         </div>
       </div>
 
       <div className="footer-bottom">
-        <p>&copy; 2024 THE WARRIOR. All rights reserved.</p>
+        <p>&copy; 2024 THE WARRIOR IN YOU. All rights reserved.</p>
       </div>
     </footer>
   );

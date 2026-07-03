@@ -4,7 +4,11 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  padding: 15px 0;
+  padding: 16px 0;
+  background: rgba(8, 8, 10, 0.58);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(214, 177, 92, 0.12);
 }
 
 .navbar-container {
@@ -14,6 +18,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
 }
 
 .navbar-logo {
@@ -27,14 +32,30 @@
 }
 
 .logo-icon {
-  font-size: 32px;
+  font-size: 30px;
+}
+
+.logo-copy {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
 }
 
 .logo-text {
+  font-family: 'Space Grotesk', sans-serif;
   background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  letter-spacing: 0.06em;
+}
+
+.logo-tag {
+  font-size: 11px;
+  color: var(--text-gray);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 4px;
 }
 
 .navbar-menu {
@@ -49,6 +70,7 @@
   font-weight: 500;
   transition: color 0.3s ease;
   position: relative;
+  padding: 10px 0;
 }
 
 .nav-link:hover {
@@ -109,17 +131,54 @@
   transition: all 0.3s ease;
 }
 
+.mobile-menu-btn.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.mobile-menu-btn.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-menu-btn.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
 @media (max-width: 768px) {
+  .navbar-container {
+    padding: 0 16px;
+  }
+
+  .navbar-logo {
+    gap: 8px;
+    max-width: 70%;
+  }
+
+  .logo-copy {
+    min-width: 0;
+  }
+
+  .logo-text {
+    font-size: 16px;
+    line-height: 1.1;
+  }
+
+  .logo-tag {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+  }
+
   .navbar-menu {
     display: none;
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
-    background: var(--secondary-black);
+    background: rgba(8, 8, 10, 0.96);
+    backdrop-filter: blur(20px);
     flex-direction: column;
     padding: 20px;
     border-top: 1px solid var(--glass-border);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
   }
 
   .navbar-menu.active {

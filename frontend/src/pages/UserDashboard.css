@@ -191,18 +191,41 @@
 }
 
 @media (max-width: 768px) {
+  .dashboard-container {
+    margin: 24px auto 40px;
+    padding: 0 16px;
+  }
+
   .dashboard-title {
     font-size: 28px;
+  }
+
+  .dashboard-subtitle {
+    font-size: 15px;
   }
 
   .stats-grid {
     grid-template-columns: 1fr;
   }
 
+  .stat-card,
+  .referral-section,
+  .dashboard-section {
+    padding: 20px 16px;
+  }
+
   .section-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 15px;
+  }
+
+  .section-header h2 {
+    font-size: 22px;
+  }
+
+  .books-grid {
+    grid-template-columns: 1fr;
   }
 
   .referral-link-box {
@@ -217,5 +240,10 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 15px;
+  }
+
+  .copy-btn,
+  .browse-btn {
+    width: 100%;
   }
 }

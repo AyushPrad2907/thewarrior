@@ -17,9 +17,9 @@
 }
 
 .book-summary {
-  background: var(--primary-black);
-  padding: 20px;
-  border-radius: 12px;
+  background: rgba(17, 18, 21, 0.85);
+  padding: 22px;
+  border-radius: 18px;
   margin-bottom: 30px;
   border: 1px solid var(--glass-border);
 }
@@ -65,12 +65,13 @@
 }
 
 .qr-code {
-  width: 200px;
-  height: 200px;
+  width: 220px;
+  height: 220px;
   background: white;
   padding: 20px;
-  border-radius: 12px;
+  border-radius: 18px;
   margin-bottom: 10px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
 }
 
 .qr-svg {
@@ -84,9 +85,9 @@
 }
 
 .upi-details {
-  background: var(--primary-black);
+  background: rgba(17, 18, 21, 0.85);
   padding: 20px;
-  border-radius: 12px;
+  border-radius: 18px;
   margin-bottom: 20px;
   border: 1px solid var(--glass-border);
 }
@@ -103,7 +104,7 @@
 .payment-steps {
   background: rgba(212, 175, 55, 0.1);
   padding: 20px;
-  border-radius: 12px;
+  border-radius: 18px;
   border: 1px solid var(--glass-border);
 }
 
@@ -127,7 +128,7 @@
 
 .image-preview {
   margin-top: 15px;
-  border-radius: 8px;
+  border-radius: 14px;
   overflow: hidden;
   border: 2px solid var(--glass-border);
 }
@@ -151,16 +152,34 @@
 }
 
 @media (max-width: 768px) {
+  .payment-container {
+    margin: 24px auto 40px;
+    padding: 0 16px;
+  }
+
   .payment-card {
-    padding: 30px 20px;
+    padding: 24px 18px;
   }
 
   .payment-title {
-    font-size: 24px;
+    font-size: 26px;
+  }
+
+  .book-summary h2 {
+    font-size: 20px;
+  }
+
+  .payment-instructions h3 {
+    font-size: 18px;
   }
 
   .qr-code {
-    width: 150px;
-    height: 150px;
+    width: 160px;
+    height: 160px;
+  }
+
+  .payment-button,
+  .cancel-button {
+    font-size: 14px;
   }
 }

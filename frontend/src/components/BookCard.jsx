@@ -3,11 +3,13 @@ import { getBackendAssetUrl } from '../services/api';
 import './BookCard.css';
 
 const BookCard = ({ book }) => {
+  const coverImage = book.coverImage ? getBackendAssetUrl(book.coverImage) : '/book-cover.jpg';
+
   return (
-    <div className="book-card card fade-in">
+    <div className="book-card card fade-in reveal-card" data-reveal>
       <div className="book-cover">
         <img 
-          src={getBackendAssetUrl(book.coverImage)} 
+          src={coverImage} 
           alt={book.title}
           className="cover-image"
         />

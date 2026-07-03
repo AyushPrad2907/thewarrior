@@ -1,13 +1,28 @@
 .book-card {
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  border-radius: 22px;
+}
+
+.book-card.reveal-card {
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.book-card.reveal-card[data-reveal] {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.book-card.reveal-card[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .book-cover {
   position: relative;
   width: 100%;
-  height: 300px;
+  height: 320px;
   overflow: hidden;
 }
 
@@ -22,6 +37,10 @@
   transform: scale(1.1);
 }
 
+.book-card:hover {
+  border-color: rgba(214, 177, 92, 0.4);
+}
+
 .book-overlay {
   position: absolute;
   top: 0;
@@ -29,6 +48,7 @@
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,17 +61,16 @@
 }
 
 .book-info {
-  padding: 20px;
+  padding: 22px;
 }
 
 .book-title {
-  font-size: 20px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 21px;
   font-weight: 700;
   color: var(--text-white);
   margin-bottom: 8px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  line-height: 1.3;
 }
 
 .book-author {
@@ -63,10 +82,10 @@
 .book-description {
   font-size: 14px;
   color: var(--text-gray);
-  line-height: 1.5;
+  line-height: 1.7;
   margin-bottom: 16px;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -90,7 +109,8 @@
   color: var(--text-gray);
   text-transform: uppercase;
   letter-spacing: 1px;
-  padding: 4px 12px;
-  background: var(--primary-black);
-  border-radius: 12px;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(214, 177, 92, 0.16);
+  border-radius: 999px;
 }

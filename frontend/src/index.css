@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -5,25 +7,54 @@
 }
 
 :root {
-  --primary-black: #0a0a0a;
-  --secondary-black: #1a1a1a;
-  --accent-gold: #d4af37;
-  --accent-gold-light: #f4d03f;
+  --primary-black: #060607;
+  --secondary-black: #111215;
+  --surface-black: rgba(17, 18, 21, 0.8);
+  --accent-gold: #d6b15c;
+  --accent-gold-light: #f6db8b;
   --text-white: #ffffff;
-  --text-gray: #b0b0b0;
-  --glass-bg: rgba(26, 26, 26, 0.8);
-  --glass-border: rgba(212, 175, 55, 0.3);
+  --text-gray: #c7c9d1;
+  --muted-gray: #8f93a2;
+  --glass-bg: rgba(17, 18, 21, 0.72);
+  --glass-border: rgba(214, 177, 92, 0.18);
   --success: #4ade80;
   --error: #f87171;
   --warning: #fbbf24;
+  --shadow-soft: 0 20px 60px rgba(0, 0, 0, 0.35);
+  --shadow-gold: 0 16px 40px rgba(214, 177, 92, 0.18);
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--primary-black);
+  font-family: 'Manrope', sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(214, 177, 92, 0.08), transparent 30%),
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.04), transparent 28%),
+    linear-gradient(180deg, #060607 0%, #0b0c10 100%);
   color: var(--text-white);
   line-height: 1.6;
   min-height: 100vh;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 120px 120px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.25), transparent 85%);
+  opacity: 0.35;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: rgba(214, 177, 92, 0.35);
+  color: var(--text-white);
 }
 
 .app {
@@ -35,27 +66,36 @@ body {
 .main-content {
   flex: 1;
   padding-top: 80px;
+  position: relative;
+  z-index: 1;
 }
 
 /* Glassmorphism */
 .glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   border: 1px solid var(--glass-border);
-  border-radius: 16px;
+  border-radius: 20px;
+  box-shadow: var(--shadow-soft);
 }
 
 /* Buttons */
 .btn {
   padding: 12px 24px;
   border: none;
-  border-radius: 8px;
+  border-radius: 999px;
   cursor: pointer;
   font-size: 16px;
   font-weight: 600;
   transition: all 0.3s ease;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.08em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
 }
 
 .btn-primary {
@@ -64,13 +104,13 @@ body {
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-gold);
 }
 
 .btn-secondary {
   background: transparent;
-  border: 2px solid var(--accent-gold);
+  border: 1px solid var(--accent-gold);
   color: var(--accent-gold);
 }
 
@@ -105,10 +145,10 @@ body {
 .form-group textarea,
 .form-group select {
   width: 100%;
-  padding: 12px 16px;
-  background: var(--secondary-black);
+  padding: 14px 16px;
+  background: rgba(17, 18, 21, 0.9);
   border: 1px solid var(--glass-border);
-  border-radius: 8px;
+  border-radius: 14px;
   color: var(--text-white);
   font-size: 16px;
   transition: all 0.3s ease;
@@ -129,16 +169,17 @@ body {
 
 /* Cards */
 .card {
-  background: var(--secondary-black);
+  background: linear-gradient(180deg, rgba(20, 21, 26, 0.96), rgba(12, 13, 16, 0.96));
   border: 1px solid var(--glass-border);
-  border-radius: 16px;
+  border-radius: 22px;
   padding: 24px;
   transition: all 0.3s ease;
+  box-shadow: var(--shadow-soft);
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  transform: translateY(-8px);
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.45);
 }
 
 /* Loading Spinner */

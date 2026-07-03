@@ -1,24 +1,59 @@
 .landing {
-  padding: 40px 20px;
+  position: relative;
+  isolation: isolate;
+  padding: 20px 20px 40px;
+}
+
+.landing::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(180deg, rgba(6, 6, 7, 0.72), rgba(6, 6, 7, 0.92)),
+    url('/landing-bg.jpg') center/cover no-repeat;
+  opacity: 0.92;
+}
+
+.landing::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(214, 177, 92, 0.16), transparent 28%),
+    radial-gradient(circle at 82% 20%, rgba(255, 255, 255, 0.06), transparent 22%),
+    linear-gradient(180deg, transparent, rgba(6, 6, 7, 0.26));
 }
 
 .hero {
+  --hero-shift: 0px;
   position: relative;
   overflow: hidden;
   max-width: 1200px;
-  margin: 0 auto 60px;
-  padding: 80px 40px;
+  margin: 0 auto 48px;
+  padding: 64px 40px 72px;
   text-align: left;
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
   gap: 32px;
-  align-items: center;
+  align-items: start;
   background:
-    linear-gradient(135deg, rgba(6, 6, 6, 0.92), rgba(18, 18, 18, 0.86)),
+    linear-gradient(135deg, rgba(6, 6, 6, 0.72), rgba(18, 18, 18, 0.72)),
     url('/landing-bg.jpg');
   background-size: cover;
   background-position: center;
+  background-blend-mode: multiply;
   border: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(214, 177, 92, 0.08), transparent 35%, rgba(255, 255, 255, 0.03));
+  transform: translateY(calc(var(--hero-shift) * -0.2));
+  pointer-events: none;
 }
 
 .hero-backdrop {
@@ -27,15 +62,46 @@
   background:
     radial-gradient(circle at top right, rgba(212, 175, 55, 0.18), transparent 32%),
     radial-gradient(circle at bottom left, rgba(244, 208, 63, 0.12), transparent 28%);
+  transform: translateY(calc(var(--hero-shift) * -0.35));
   pointer-events: none;
+}
+
+.hero-orbit {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(214, 177, 92, 0.14);
+  pointer-events: none;
+  animation: floatGlow 10s ease-in-out infinite;
+}
+
+.hero-orbit-one {
+  width: 360px;
+  height: 360px;
+  top: -120px;
+  right: -100px;
+}
+
+.hero-orbit-two {
+  width: 220px;
+  height: 220px;
+  bottom: -70px;
+  left: -50px;
+  animation-duration: 14s;
+  animation-direction: reverse;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  padding-top: 8px;
 }
 
 .hero-title {
   position: relative;
   z-index: 1;
-  font-size: 56px;
+  font-size: 58px;
   font-weight: 800;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   color: var(--text-white);
   line-height: 1.05;
   max-width: 780px;
@@ -71,7 +137,7 @@
   z-index: 1;
   font-size: 20px;
   color: var(--text-gray);
-  margin-bottom: 40px;
+  margin-bottom: 32px;
   max-width: 800px;
   line-height: 1.7;
 }
@@ -95,7 +161,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
-  margin-top: 28px;
+  margin-top: 22px;
 }
 
 .hero-pillar {
@@ -110,15 +176,31 @@
 .hero-stats {
   position: relative;
   z-index: 1;
-  padding: 28px;
+  padding: 24px;
   background: rgba(6, 6, 6, 0.45);
   backdrop-filter: blur(18px);
 }
 
+.hero-book-cover-wrap {
+  margin-bottom: 14px;
+  padding: 12px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(214, 177, 92, 0.16), rgba(255, 255, 255, 0.04));
+}
+
+.hero-book-cover {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 18px;
+  display: block;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
+}
+
 .hero-stats h2 {
   color: var(--text-white);
-  font-size: 28px;
-  margin-bottom: 18px;
+  font-size: 26px;
+  margin-bottom: 16px;
 }
 
 .impact-stats {
@@ -147,17 +229,17 @@
 }
 
 .hero-note {
-  margin-top: 18px;
+  margin-top: 14px;
   color: var(--text-white);
   line-height: 1.7;
-  padding: 18px;
+  padding: 16px;
   border-left: 3px solid var(--accent-gold);
   background: rgba(212, 175, 55, 0.08);
 }
 
 .features {
   max-width: 1200px;
-  margin: 0 auto 80px;
+  margin: 0 auto 72px;
 }
 
 .section-title {
@@ -208,9 +290,75 @@
   line-height: 1.6;
 }
 
+.book-spotlight {
+  display: grid;
+  grid-template-columns: minmax(220px, 320px) 1fr;
+  gap: 28px;
+  align-items: center;
+  padding: 24px;
+}
+
+.book-spotlight-cover {
+  width: 100%;
+  border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.book-spotlight-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.spotlight-label {
+  display: inline-flex;
+  width: fit-content;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(214, 177, 92, 0.18);
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.spotlight-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 34px;
+  color: var(--text-white);
+}
+
+.spotlight-text {
+  color: var(--text-gray);
+  line-height: 1.8;
+}
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-card {
+  transform-origin: center;
+}
+
+.reveal-card.is-visible {
+  transform: translateY(0);
+}
+
 .books-section {
   max-width: 1200px;
-  margin: 0 auto 80px;
+  margin: 0 auto 72px;
 }
 
 .books-grid {
@@ -228,8 +376,8 @@
 
 .cta-section {
   max-width: 1200px;
-  margin: 0 auto 60px;
-  padding: 60px 40px;
+  margin: 0 auto 50px;
+  padding: 52px 40px;
   text-align: center;
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(244, 208, 63, 0.05));
 }
@@ -253,10 +401,22 @@
   font-size: 18px;
 }
 
+@keyframes floatGlow {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate3d(0, -10px, 0) scale(1.04);
+    opacity: 1;
+  }
+}
+
 @media (max-width: 768px) {
   .hero {
     grid-template-columns: 1fr;
-    padding: 60px 20px;
+    padding: 48px 20px 56px;
   }
 
   .hero {
@@ -264,19 +424,24 @@
   }
 
   .hero-title {
-    font-size: 34px;
+    font-size: 36px;
   }
 
   .hero-subtitle {
     font-size: 16px;
+    margin-bottom: 24px;
   }
 
   .hero-pillars {
     grid-template-columns: 1fr;
   }
 
+  .hero-book-cover-wrap {
+    margin-bottom: 16px;
+  }
+
   .hero-stats {
-    padding: 22px;
+    padding: 20px;
   }
 
   .section-title {
@@ -295,11 +460,34 @@
     grid-template-columns: 1fr;
   }
 
+  .book-spotlight {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .spotlight-title {
+    font-size: 28px;
+  }
+
   .cta-section {
-    padding: 40px 20px;
+    padding: 36px 18px;
   }
 
   .cta-title {
     font-size: 28px;
+  }
+
+  .hero-orbit-one {
+    width: 220px;
+    height: 220px;
+    top: -70px;
+    right: -90px;
+  }
+
+  .hero-orbit-two {
+    width: 160px;
+    height: 160px;
+    left: -70px;
+    bottom: -60px;
   }
 }

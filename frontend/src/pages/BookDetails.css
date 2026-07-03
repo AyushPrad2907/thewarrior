@@ -23,11 +23,14 @@
   border-radius: 24px;
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.18), rgba(255, 255, 255, 0.04));
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  width: min(100%, 380px);
 }
 
 .detail-cover {
-  max-width: 100%;
+  width: 100%;
+  aspect-ratio: 3 / 4;
   height: auto;
+  object-fit: cover;
   border-radius: 18px;
   display: block;
 }
@@ -121,6 +124,10 @@
   flex-wrap: wrap;
 }
 
+.detail-actions .btn {
+  flex: 1 1 220px;
+}
+
 .purchased-badge {
   display: inline-flex;
   align-items: center;
@@ -141,10 +148,23 @@
 }
 
 @media (max-width: 768px) {
+  .book-details-container {
+    margin: 24px auto 40px;
+    padding: 0 16px;
+  }
+
   .book-details {
     grid-template-columns: 1fr;
     gap: 30px;
-    padding: 30px 20px;
+    padding: 24px 18px;
+  }
+
+  .book-cover-section {
+    order: -1;
+  }
+
+  .detail-cover-frame {
+    width: min(100%, 320px);
   }
 
   .detail-title {
@@ -165,5 +185,9 @@
 
   .detail-actions button {
     width: 100%;
+  }
+
+  .detail-benefits {
+    padding: 16px;
   }
 }
