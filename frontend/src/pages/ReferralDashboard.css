@@ -40,6 +40,10 @@
   box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
 }
 
+.highlight-card {
+  border: 1px solid rgba(212, 175, 55, 0.35);
+}
+
 .stat-icon {
   font-size: 48px;
 }
@@ -66,6 +70,109 @@
   color: var(--accent-gold);
   margin-bottom: 15px;
   font-size: 20px;
+}
+
+.commission-section {
+  padding: 30px;
+  margin-bottom: 40px;
+}
+
+.commission-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.commission-subtitle {
+  color: var(--text-gray);
+  margin: 8px 0 0;
+  line-height: 1.6;
+}
+
+.commission-total {
+  min-width: 180px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  text-align: right;
+}
+
+.commission-total span {
+  display: block;
+  font-size: 12px;
+  color: var(--text-gray);
+  margin-bottom: 6px;
+}
+
+.commission-total strong {
+  font-size: 28px;
+  color: var(--accent-gold);
+}
+
+.commission-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.commission-summary-card {
+  padding: 18px;
+  border-radius: 12px;
+  background: var(--primary-black);
+  border: 1px solid var(--glass-border);
+}
+
+.commission-summary-card span {
+  display: block;
+  color: var(--text-gray);
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.commission-summary-card strong {
+  color: var(--text-white);
+  font-size: 22px;
+}
+
+.commission-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.commission-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  padding: 18px 20px;
+  border-radius: 12px;
+  background: var(--primary-black);
+  border: 1px solid var(--glass-border);
+}
+
+.commission-item-main h4 {
+  margin: 0 0 5px 0;
+  color: var(--text-white);
+}
+
+.commission-item-main p {
+  margin: 0;
+  color: var(--text-gray);
+  font-size: 14px;
+}
+
+.commission-item-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  color: var(--accent-gold);
+  font-weight: 600;
 }
 
 .referral-description {
@@ -226,6 +333,10 @@
   font-size: 16px;
 }
 
+.empty-state.compact {
+  padding: 28px 20px;
+}
+
 .how-it-works {
   padding: 40px;
   margin-bottom: 40px;
@@ -288,6 +399,24 @@
 
   .referral-link-box {
     flex-direction: column;
+  }
+
+  .commission-header {
+    flex-direction: column;
+  }
+
+  .commission-total {
+    width: 100%;
+    text-align: left;
+  }
+
+  .commission-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .commission-item-meta {
+    align-items: flex-start;
   }
 
   .copy-btn {

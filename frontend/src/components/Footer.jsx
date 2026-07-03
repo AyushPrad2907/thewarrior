@@ -3,7 +3,7 @@ import './Footer.css';
 
 const Footer = () => {
   return (
-    <footer className="footer glass">
+    <footer className="footer">
       <div className="footer-container">
         <div className="footer-section">
           <h3 className="footer-title">THE WARRIOR IN YOU</h3>

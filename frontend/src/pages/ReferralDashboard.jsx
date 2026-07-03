@@ -70,6 +70,13 @@ const ReferralDashboard = () => {
             <p>Your Code</p>
           </div>
         </div>
+        <div className="stat-card glass highlight-card">
+          <div className="stat-icon">₹</div>
+          <div className="stat-info">
+            <h3>₹{networkData?.stats?.weeklyCommission?.toFixed(2) || '0.00'}</h3>
+            <p>Weekly Commission</p>
+          </div>
+        </div>
       </div>
 
       {/* Referral Link */}
@@ -90,6 +97,58 @@ const ReferralDashboard = () => {
             Copy Link
           </button>
         </div>
+      </div>
+
+      {/* Weekly Commission */}
+      <div className="commission-section glass">
+        <div className="commission-header">
+          <div>
+            <h2 className="section-title">Weekly Commission</h2>
+            <p className="commission-subtitle">
+              Earnings from approved purchases made by your direct referrals in the last 7 days.
+            </p>
+          </div>
+          <div className="commission-total">
+            <span>Total</span>
+            <strong>₹{networkData?.stats?.weeklyCommission?.toFixed(2) || '0.00'}</strong>
+          </div>
+        </div>
+
+        <div className="commission-summary-grid">
+          <div className="commission-summary-card">
+            <span>Weekly Sales</span>
+            <strong>₹{networkData?.stats?.weeklySales?.toFixed(2) || '0.00'}</strong>
+          </div>
+          <div className="commission-summary-card">
+            <span>Commission Rate</span>
+            <strong>{Math.round((networkData?.stats?.weeklyCommissionRate || 0) * 100)}%</strong>
+          </div>
+          <div className="commission-summary-card">
+            <span>Paid Purchases</span>
+            <strong>{networkData?.stats?.weeklyCommissionCount || 0}</strong>
+          </div>
+        </div>
+
+        {networkData?.weeklyCommissionEntries?.length > 0 ? (
+          <div className="commission-list">
+            {networkData.weeklyCommissionEntries.map((entry) => (
+              <div key={entry.paymentId} className="commission-item">
+                <div className="commission-item-main">
+                  <h4>{entry.referralName}</h4>
+                  <p>{entry.bookTitle}</p>
+                </div>
+                <div className="commission-item-meta">
+                  <span>Sale: ₹{entry.saleAmount}</span>
+                  <span>Your share: ₹{entry.commission.toFixed(2)}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="empty-state compact">
+            <p>No weekly commission yet. It will appear once your referrals complete approved purchases.</p>
+          </div>
+        )}
       </div>
 
       {/* Direct Referrals */}

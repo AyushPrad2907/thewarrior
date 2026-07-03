@@ -29,7 +29,13 @@ export const getBackendAssetUrl = (assetPath) => {
     return assetPath;
   }
 
-  return `${BACKEND_BASE_URL}/${assetPath.replace(/^\/+/, '')}`;
+  const normalizedPath = assetPath.replace(/^\/+/, '');
+
+  if (normalizedPath.startsWith('uploads/')) {
+    return `${BACKEND_BASE_URL}/${normalizedPath}`;
+  }
+
+  return `${BACKEND_BASE_URL}/uploads/${normalizedPath}`;
 };
 
 const api = axios.create({

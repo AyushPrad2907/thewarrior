@@ -119,7 +119,7 @@ const Payment = () => {
           </div>
           
           <div className="upi-details">
-            <p><strong>UPI ID:</strong> warrior@upi</p>
+            <p><strong>UPI ID:</strong> 7859088239@okbizaxis</p>
             <p><strong>Amount:</strong> ₹{book.price}</p>
           </div>
 
