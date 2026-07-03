@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useParams } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -30,6 +30,21 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
+const ReaderRoute = ({ children }) => {
+  const { type } = useParams();
+  const token = localStorage.getItem('token');
+
+  if (type === 'preview') {
+    return children;
+  }
+
+  if (!token) {
+    return <Navigate to="/login" />;
+  }
+
+  return children;
+};
+
 // Admin Route Component
 const AdminRoute = ({ children }) => {
   const token = localStorage.getItem('token');
@@ -56,9 +71,9 @@ function App() {
               
               {/* Protected Routes */}
               <Route path="/reader/:id/:type" element={
-                <ProtectedRoute>
+                <ReaderRoute>
                   <Reader />
-                </ProtectedRoute>
+                </ReaderRoute>
               } />
               <Route path="/payment/:bookId" element={
                 <ProtectedRoute>

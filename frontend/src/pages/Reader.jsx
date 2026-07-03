@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { booksAPI } from '../services/api';
+import { booksAPI, getBackendBaseUrl } from '../services/api';
 import LoadingSpinner from '../components/LoadingSpinner';
 import './Reader.css';
 
@@ -30,7 +30,9 @@ const Reader = () => {
       }
 
       if (response.data.success) {
-        setEpubUrl(`http://localhost:5000${response.data.epubUrl}`);
+        const backendBaseUrl = getBackendBaseUrl();
+        const epubPath = response.data.epubUrl || '';
+        setEpubUrl(/^https?:\/\//i.test(epubPath) ? epubPath : `${backendBaseUrl}${epubPath}`);
       }
     } catch (error) {
       setError(error.response?.data?.message || 'Failed to load ebook');

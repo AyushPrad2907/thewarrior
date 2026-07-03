@@ -11,7 +11,7 @@ const resolveApiBaseUrl = () => {
   }
 
   if (typeof window !== 'undefined') {
-    return `${normalizeUrl(window.location.origin)}/api`;
+    return '/api';
   }
 
   return 'http://localhost:5000/api';
@@ -19,6 +19,8 @@ const resolveApiBaseUrl = () => {
 
 const API_URL = resolveApiBaseUrl();
 const BACKEND_BASE_URL = API_URL.replace(/\/api$/, '');
+
+export const getBackendBaseUrl = () => BACKEND_BASE_URL;
 
 export const getBackendAssetUrl = (assetPath) => {
   if (!assetPath) {

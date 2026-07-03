@@ -34,10 +34,6 @@ const BookDetails = () => {
   };
 
   const handleReadPreview = () => {
-    if (!user) {
-      navigate('/login');
-      return;
-    }
     navigate(`/reader/${id}/preview`);
   };
 
