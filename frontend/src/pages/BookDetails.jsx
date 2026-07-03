@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { booksAPI } from '../services/api';
+import { booksAPI, getBackendAssetUrl } from '../services/api';
 import LoadingSpinner from '../components/LoadingSpinner';
 import './BookDetails.css';
 
@@ -69,14 +69,17 @@ const BookDetails = () => {
     <div className="book-details-container">
       <div className="book-details glass">
         <div className="book-cover-section">
+          <div className="detail-cover-frame">
           <img 
-            src={`http://localhost:5000/${book.coverImage}`} 
+            src={getBackendAssetUrl(book.coverImage)} 
             alt={book.title}
             className="detail-cover"
           />
+          </div>
         </div>
 
         <div className="book-info-section">
+          <div className="detail-kicker">Your next breakthrough starts here</div>
           <h1 className="detail-title">{book.title}</h1>
           <p className="detail-author">by {book.author}</p>
           <div className="detail-meta">
@@ -85,6 +88,15 @@ const BookDetails = () => {
           </div>
 
           <p className="detail-description">{book.description}</p>
+
+          <div className="detail-benefits glass">
+            <h3>What you get</h3>
+            <ul>
+              <li>Preview the book before you commit</li>
+              <li>Unlock the full read after payment approval</li>
+              <li>Read on a clean, distraction-free experience</li>
+            </ul>
+          </div>
 
           <div className="detail-actions">
             <button onClick={handleReadPreview} className="btn btn-secondary">
@@ -106,6 +118,12 @@ const BookDetails = () => {
             <div className="purchased-badge">
               ✓ Purchased
             </div>
+          )}
+
+          {!isPurchased && (
+            <p className="detail-cta-note">
+              One purchase unlocks the full book for your account after verification.
+            </p>
           )}
         </div>
       </div>

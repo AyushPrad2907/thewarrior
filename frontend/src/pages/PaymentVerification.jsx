@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { paymentsAPI } from '../services/api';
+import { paymentsAPI, getBackendAssetUrl } from '../services/api';
 import LoadingSpinner from '../components/LoadingSpinner';
 import './PaymentVerification.css';
 
@@ -153,9 +153,9 @@ const PaymentVerification = () => {
                   <div className="payment-screenshot">
                     <p>Screenshot:</p>
                     <img
-                      src={`http://localhost:5000/${payment.paymentScreenshot}`}
+                      src={getBackendAssetUrl(payment.paymentScreenshot)}
                       alt="Payment screenshot"
-                      onClick={() => window.open(`http://localhost:5000/${payment.paymentScreenshot}`, '_blank')}
+                      onClick={() => window.open(getBackendAssetUrl(payment.paymentScreenshot), '_blank')}
                     />
                   </div>
                 )}

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { getBackendAssetUrl } from '../services/api';
 import './BookCard.css';
 
 const BookCard = ({ book }) => {
@@ -6,7 +7,7 @@ const BookCard = ({ book }) => {
     <div className="book-card card fade-in">
       <div className="book-cover">
         <img 
-          src={`http://localhost:5000/${book.coverImage}`} 
+          src={getBackendAssetUrl(book.coverImage)} 
           alt={book.title}
           className="cover-image"
         />

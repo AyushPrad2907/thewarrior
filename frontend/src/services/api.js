@@ -1,6 +1,36 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const normalizeUrl = (url) => url.replace(/\/+$/, '');
+
+const resolveApiBaseUrl = () => {
+  const configuredUrl = import.meta.env.VITE_API_URL;
+
+  if (configuredUrl) {
+    const normalizedUrl = normalizeUrl(configuredUrl);
+    return normalizedUrl.endsWith('/api') ? normalizedUrl : `${normalizedUrl}/api`;
+  }
+
+  if (typeof window !== 'undefined') {
+    return `${normalizeUrl(window.location.origin)}/api`;
+  }
+
+  return 'http://localhost:5000/api';
+};
+
+const API_URL = resolveApiBaseUrl();
+const BACKEND_BASE_URL = API_URL.replace(/\/api$/, '');
+
+export const getBackendAssetUrl = (assetPath) => {
+  if (!assetPath) {
+    return '';
+  }
+
+  if (/^https?:\/\//i.test(assetPath)) {
+    return assetPath;
+  }
+
+  return `${BACKEND_BASE_URL}/${assetPath.replace(/^\/+/, '')}`;
+};
 
 const api = axios.create({
   baseURL: API_URL,

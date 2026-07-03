@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { booksAPI, adminAPI } from '../services/api';
+import { getBackendAssetUrl } from '../services/api';
 import LoadingSpinner from '../components/LoadingSpinner';
 import './BookUpload.css';
 
@@ -256,7 +257,7 @@ const BookUpload = () => {
                 <div key={book._id} className="book-item">
                   <div className="book-cover">
                     <img 
-                      src={`http://localhost:5000/${book.coverImage}`} 
+                      src={getBackendAssetUrl(book.coverImage)} 
                       alt={book.title}
                     />
                   </div>
