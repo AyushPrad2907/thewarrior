@@ -2,6 +2,8 @@ const Book = require('../models/Book');
 const User = require('../models/User');
 const upload = require('../middleware/upload');
 
+const normalizeUploadPath = (filePath) => filePath.replace(/^uploads[\\/]+/, '').replace(/^\\+/, '');
+
 // @desc    Get all books
 // @route   GET /api/books
 // @access  Public
@@ -68,9 +70,10 @@ exports.createBook = async (req, res) => {
       author,
       price,
       category,
-      coverImage: req.files.coverImage[0].path,
-      previewEpub: req.files.previewEpub[0].path,
-      fullEpub: req.files.fullEpub[0].path
+      coverImage: normalizeUploadPath(req.files.coverImage[0].path),
+      previewEpub: normalizeUploadPath(req.files.previewEpub[0].path),
+      fullEpub: normalizeUploadPath(req.files.fullEpub[0].path),
+      qrCodeImage: req.files.qrCodeImage ? normalizeUploadPath(req.files.qrCodeImage[0].path) : ''
     });
 
     res.status(201).json({
@@ -110,9 +113,10 @@ exports.updateBook = async (req, res) => {
     if (isActive !== undefined) book.isActive = isActive;
 
     if (req.files) {
-      if (req.files.coverImage) book.coverImage = req.files.coverImage[0].path;
-      if (req.files.previewEpub) book.previewEpub = req.files.previewEpub[0].path;
-      if (req.files.fullEpub) book.fullEpub = req.files.fullEpub[0].path;
+      if (req.files.coverImage) book.coverImage = normalizeUploadPath(req.files.coverImage[0].path);
+      if (req.files.previewEpub) book.previewEpub = normalizeUploadPath(req.files.previewEpub[0].path);
+      if (req.files.fullEpub) book.fullEpub = normalizeUploadPath(req.files.fullEpub[0].path);
+      if (req.files.qrCodeImage) book.qrCodeImage = normalizeUploadPath(req.files.qrCodeImage[0].path);
     }
 
     await book.save();
@@ -174,7 +178,7 @@ exports.getPreviewEpub = async (req, res) => {
 
     res.json({
       success: true,
-      epubUrl: `/uploads/${book.previewEpub}`
+      epubUrl: `/uploads/${book.previewEpub.replace(/^uploads[\\/]+/, '')}`
     });
   } catch (error) {
     res.status(500).json({
@@ -209,7 +213,7 @@ exports.getFullEpub = async (req, res) => {
 
     res.json({
       success: true,
-      epubUrl: `/uploads/${book.fullEpub}`
+      epubUrl: `/uploads/${book.fullEpub.replace(/^uploads[\\/]+/, '')}`
     });
   } catch (error) {
     res.status(500).json({

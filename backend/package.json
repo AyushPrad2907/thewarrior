@@ -8,6 +8,7 @@
     "dev": "nodemon server.js",
     "setup": "node setup.js",
     "seed:admin": "node seedAdmin.js",
+    "seed:book": "node seedBook.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": ["ebook", "referral", "mern"],

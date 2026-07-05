@@ -14,6 +14,8 @@ const storage = multer.diskStorage({
       uploadPath += 'fullbooks/';
     } else if (file.fieldname === 'paymentScreenshot') {
       uploadPath += 'screenshots/';
+    } else if (file.fieldname === 'qrCodeImage') {
+      uploadPath += 'qrcode/';
     }
     
     cb(null, uploadPath);
@@ -43,6 +45,12 @@ const fileFilter = (req, file, cb) => {
       cb(null, true);
     } else {
       cb(new Error('Payment screenshot must be an image file'), false);
+    }
+  } else if (file.fieldname === 'qrCodeImage') {
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('QR code image must be an image file'), false);
     }
   } else {
     cb(new Error('Unknown file field'), false);

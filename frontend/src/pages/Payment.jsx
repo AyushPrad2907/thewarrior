@@ -102,18 +102,26 @@ const Payment = () => {
           <h3>Payment Instructions</h3>
           <div className="qr-section">
             <div className="qr-placeholder">
-              <div className="qr-code">
-                <svg viewBox="0 0 100 100" className="qr-svg">
-                  <rect x="10" y="10" width="30" height="30" fill="#d4af37"/>
-                  <rect x="60" y="10" width="30" height="30" fill="#d4af37"/>
-                  <rect x="10" y="60" width="30" height="30" fill="#d4af37"/>
-                  <rect x="45" y="45" width="10" height="10" fill="#d4af37"/>
-                  <rect x="45" y="45" width="10" height="10" fill="#d4af37"/>
-                  <rect x="20" y="20" width="10" height="10" fill="#1a1a1a"/>
-                  <rect x="70" y="20" width="10" height="10" fill="#1a1a1a"/>
-                  <rect x="20" y="70" width="10" height="10" fill="#1a1a1a"/>
-                </svg>
-              </div>
+              {book.qrCodeImage ? (
+                <img 
+                  src={`${import.meta.env.VITE_API_URL?.replace('/api', '')}/uploads/${book.qrCodeImage.replace(/^uploads[\\/]+/, '')}`} 
+                  alt="Payment QR Code" 
+                  className="qr-image"
+                />
+              ) : (
+                <div className="qr-code">
+                  <svg viewBox="0 0 100 100" className="qr-svg">
+                    <rect x="10" y="10" width="30" height="30" fill="#d4af37"/>
+                    <rect x="60" y="10" width="30" height="30" fill="#d4af37"/>
+                    <rect x="10" y="60" width="30" height="30" fill="#d4af37"/>
+                    <rect x="45" y="45" width="10" height="10" fill="#d4af37"/>
+                    <rect x="45" y="45" width="10" height="10" fill="#d4af37"/>
+                    <rect x="20" y="20" width="10" height="10" fill="#1a1a1a"/>
+                    <rect x="70" y="20" width="10" height="10" fill="#1a1a1a"/>
+                    <rect x="20" y="70" width="10" height="10" fill="#1a1a1a"/>
+                  </svg>
+                </div>
+              )}
               <p>Scan QR Code to Pay</p>
             </div>
           </div>

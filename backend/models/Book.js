@@ -34,6 +34,10 @@ const bookSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide a full EPUB file']
   },
+  qrCodeImage: {
+    type: String,
+    default: ''
+  },
   category: {
     type: String,
     enum: ['fiction', 'non-fiction', 'self-help', 'business', 'technology', 'other'],

@@ -79,6 +79,17 @@
   height: 100%;
 }
 
+.qr-image {
+  width: 220px;
+  height: 220px;
+  background: white;
+  padding: 20px;
+  border-radius: 18px;
+  margin-bottom: 10px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+  object-fit: contain;
+}
+
 .qr-placeholder p {
   color: var(--text-gray);
   font-size: 14px;

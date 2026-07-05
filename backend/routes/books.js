@@ -14,17 +14,19 @@ const {
 
 router.get('/', getAllBooks);
 router.get('/:id', getBookById);
-router.get('/:id/preview', protect, getPreviewEpub);
+router.get('/:id/preview', getPreviewEpub);
 router.get('/:id/full', protect, getFullEpub);
 router.post('/', protect, adminOnly, upload.fields([
   { name: 'coverImage', maxCount: 1 },
   { name: 'previewEpub', maxCount: 1 },
-  { name: 'fullEpub', maxCount: 1 }
+  { name: 'fullEpub', maxCount: 1 },
+  { name: 'qrCodeImage', maxCount: 1 }
 ]), createBook);
 router.put('/:id', protect, adminOnly, upload.fields([
   { name: 'coverImage', maxCount: 1 },
   { name: 'previewEpub', maxCount: 1 },
-  { name: 'fullEpub', maxCount: 1 }
+  { name: 'fullEpub', maxCount: 1 },
+  { name: 'qrCodeImage', maxCount: 1 }
 ]), updateBook);
 router.delete('/:id', protect, adminOnly, deleteBook);
 

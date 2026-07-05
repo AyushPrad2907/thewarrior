@@ -1,6 +1,8 @@
 const User = require('../models/User');
 const Payment = require('../models/Payment');
 
+const REFERRAL_COMMISSION_RATE = 0.1;
+
 // @desc    Get user's referral network
 // @route   GET /api/referrals/my-network
 // @access  Private
@@ -40,6 +42,37 @@ exports.getMyNetwork = async (req, res) => {
       })
     );
 
+    const weeklyStart = new Date();
+    weeklyStart.setDate(weeklyStart.getDate() - 7);
+
+    const weeklyPayments = await Payment.find({
+      user: { $in: directReferralIds },
+      status: 'approved',
+      verifiedAt: { $gte: weeklyStart }
+    })
+      .populate('user', 'name email referralCode')
+      .populate('book', 'title price')
+      .sort({ verifiedAt: -1 });
+
+    const weeklyCommissionEntries = weeklyPayments.map((payment) => {
+      const commission = payment.amount * REFERRAL_COMMISSION_RATE;
+
+      return {
+        paymentId: payment._id,
+        referralId: payment.user._id,
+        referralName: payment.user.name,
+        referralEmail: payment.user.email,
+        referralCode: payment.user.referralCode,
+        bookTitle: payment.book?.title || 'Book',
+        saleAmount: payment.amount,
+        commission,
+        verifiedAt: payment.verifiedAt
+      };
+    });
+
+    const weeklyCommissionTotal = weeklyCommissionEntries.reduce((total, entry) => total + entry.commission, 0);
+    const weeklySalesTotal = weeklyCommissionEntries.reduce((total, entry) => total + entry.saleAmount, 0);
+
     res.json({
       success: true,
       referralCode: user.referralCode,
@@ -49,8 +82,13 @@ exports.getMyNetwork = async (req, res) => {
       stats: {
         directCount: directReferrals.length,
         secondLevelCount: secondLevelReferrals.length,
-        totalNetwork: directReferrals.length + secondLevelReferrals.length
-      }
+        totalNetwork: directReferrals.length + secondLevelReferrals.length,
+        weeklyCommission: weeklyCommissionTotal,
+        weeklySales: weeklySalesTotal,
+        weeklyCommissionRate: REFERRAL_COMMISSION_RATE,
+        weeklyCommissionCount: weeklyCommissionEntries.length
+      },
+      weeklyCommissionEntries
     });
   } catch (error) {
     res.status(500).json({
