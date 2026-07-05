@@ -114,3 +114,29 @@
   border: 1px solid rgba(214, 177, 92, 0.16);
   border-radius: 999px;
 }
+
+@media (max-width: 768px) {
+  .book-cover {
+    height: 240px;
+  }
+
+  .book-title {
+    font-size: 18px;
+  }
+
+  .book-author {
+    font-size: 13px;
+  }
+
+  .book-description {
+    font-size: 13px;
+  }
+
+  .book-info {
+    padding: 18px;
+  }
+
+  .book-price {
+    font-size: 16px;
+  }
+}
