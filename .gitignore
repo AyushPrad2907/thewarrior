@@ -37,9 +37,13 @@ lerna-debug.log*
 # OS
 Thumbs.db
 
-# Backend uploads
+# Backend uploads - allow specific files
 backend/uploads/*
 !backend/uploads/.gitkeep
+!backend/uploads/covers/
+!backend/uploads/previews/
+!backend/uploads/fullbooks/
+!backend/uploads/qrcode/
 
 # Frontend
 frontend/.vite
