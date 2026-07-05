@@ -7,16 +7,17 @@ import './Reader.css';
 const Reader = () => {
   const { id, type } = useParams();
   const navigate = useNavigate();
-  const [epubUrl, setEpubUrl] = useState(null);
+  const [fileUrl, setFileUrl] = useState(null);
+  const [fileType, setFileType] = useState('pdf');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const viewerRef = useRef(null);
 
   useEffect(() => {
-    loadEpub();
+    loadFile();
   }, [id, type]);
 
-  const loadEpub = async () => {
+  const loadFile = async () => {
     try {
       setLoading(true);
       let response;
@@ -31,8 +32,10 @@ const Reader = () => {
 
       if (response.data.success) {
         const backendBaseUrl = getBackendBaseUrl();
-        const epubPath = response.data.epubUrl || '';
-        setEpubUrl(/^https?:\/\//i.test(epubPath) ? epubPath : `${backendBaseUrl}${epubPath}`);
+        const filePath = response.data.epubUrl || '';
+        const fullUrl = /^https?:\/\//i.test(filePath) ? filePath : `${backendBaseUrl}${filePath}`;
+        setFileUrl(fullUrl);
+        setFileType(filePath.endsWith('.pdf') ? 'pdf' : 'epub');
       }
     } catch (error) {
       setError(error.response?.data?.message || 'Failed to load ebook');
@@ -78,16 +81,25 @@ const Reader = () => {
       </div>
 
       <div className="reader-content">
-        {epubUrl ? (
-          <iframe
-            ref={viewerRef}
-            src={`/epub-viewer.html?book=${encodeURIComponent(epubUrl)}`}
-            className="epub-iframe"
-            title="EPUB Reader"
-          />
+        {fileUrl ? (
+          fileType === 'pdf' ? (
+            <iframe
+              ref={viewerRef}
+              src={fileUrl}
+              className="pdf-iframe"
+              title="PDF Reader"
+            />
+          ) : (
+            <iframe
+              ref={viewerRef}
+              src={`/epub-viewer.html?book=${encodeURIComponent(fileUrl)}`}
+              className="epub-iframe"
+              title="EPUB Reader"
+            />
+          )
         ) : (
           <div className="reader-error glass">
-            <p>Failed to load EPUB file</p>
+            <p>Failed to load file</p>
           </div>
         )}
       </div>

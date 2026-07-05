@@ -35,10 +35,11 @@ const fileFilter = (req, file, cb) => {
       cb(new Error('Cover image must be an image file'), false);
     }
   } else if (file.fieldname === 'previewEpub' || file.fieldname === 'fullEpub') {
-    if (file.mimetype === 'application/epub+zip' || file.mimetype === 'application/zip' || file.originalname.endsWith('.epub')) {
+    if (file.mimetype === 'application/epub+zip' || file.mimetype === 'application/zip' || file.originalname.endsWith('.epub') || 
+        file.mimetype === 'application/pdf' || file.originalname.endsWith('.pdf')) {
       cb(null, true);
     } else {
-      cb(new Error('EPUB file must be .epub format'), false);
+      cb(new Error('File must be .epub or .pdf format'), false);
     }
   } else if (file.fieldname === 'paymentScreenshot') {
     if (file.mimetype.startsWith('image/')) {

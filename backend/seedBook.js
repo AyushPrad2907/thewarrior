@@ -17,8 +17,8 @@ const bookData = {
   price: 300,
   category: 'self-help',
   coverImage: 'uploads/covers/book-cover.jpg',
-  previewEpub: 'uploads/previews/previews.epub',
-  fullEpub: 'uploads/fullbooks/fullbook.epub',
+  previewEpub: 'uploads/previews/preview.pdf',
+  fullEpub: 'uploads/fullbooks/full book.pdf',
   qrCodeImage: 'uploads/qrcode/payment-qr.jpg',
   isActive: true
 };
