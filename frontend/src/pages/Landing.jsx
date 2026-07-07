@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { booksAPI } from '../services/api';
 import BookCard from '../components/BookCard';
 import LoadingSpinner from '../components/LoadingSpinner';
+import ImageSlider from '../components/ImageSlider';
 import './Landing.css';
 
 const Landing = () => {
@@ -127,6 +128,9 @@ const Landing = () => {
           </div>
         </div>
       </section>
+
+      {/* Image Slider */}
+      <ImageSlider />
 
       {/* Features Section */}
       <section className="features" data-reveal>
