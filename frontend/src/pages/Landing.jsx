@@ -89,17 +89,14 @@ const Landing = () => {
         <div className="hero-content">
           <div className="hero-eyebrow">Read smarter. Buy confidently. Grow faster.</div>
           <h1 className="hero-title">
-            Turn one powerful book into a <span className="gold-text">better version of you</span>
+            Turn yourself into a <span className="gold-text">powerful version of you</span>
           </h1>
-          <p className="hero-subtitle">
-            The Warrior In You is built around one focused book experience. Preview it, feel the message, and buy the copy that pushes you to act.
-          </p>
           <div className="hero-buttons">
             <Link to="/signup" className="btn btn-primary hero-cta">
               Start Reading Today
             </Link>
             <Link to="/login" className="btn btn-secondary hero-cta">
-              I Already Have an Account
+              Sign In/Sign Up
             </Link>
           </div>
           <div className="hero-pillars">
@@ -114,6 +111,9 @@ const Landing = () => {
           <div className="hero-book-cover-wrap">
             <img src="/book-cover.jpg" alt="The Warrior In You book cover" className="hero-book-cover" />
           </div>
+          <div className="hero-back-cover-wrap">
+            <img src="/book-back-cover.jpg" alt="The Warrior In You book back cover" className="hero-book-cover" />
+          </div>
           <h2>Why this book matters</h2>
           <div className="impact-stats">
             {impactStats.map((stat) => (
@@ -124,7 +124,7 @@ const Landing = () => {
             ))}
           </div>
           <div className="hero-note">
-            This page is designed to sell the idea before the purchase: a clear promise, a strong cover, and a clean path to buying the book.
+            यह पेज किताब खरीदने से पहले ही उसके आइडिया को बेचने के लिए बनाया गया है: इसमें एक साफ़ वादा, एक दमदार कवर और किताब खरीदने का आसान तरीका शामिल है।
           </div>
         </div>
       </section>
@@ -136,28 +136,18 @@ const Landing = () => {
       <section className="features" data-reveal>
         <h2 className="section-title">Why readers choose THE WARRIOR IN YOU</h2>
         <p className="section-subtitle">
-          The platform is built to reduce hesitation and increase trust so the user feels the value before they buy.
+          यह प्लेटफ़ॉर्म झिझक कम करने और भरोसा बढ़ाने के लिए बनाया गया है, ताकि यूज़र कुछ भी खरीदने से पहले ही उसकी वैल्यू को समझ सकें।
         </p>
         <div className="features-grid">
           <div className="feature-card glass">
-            <div className="feature-icon">📚</div>
-            <h3>Premium Ebooks</h3>
-            <p>Access exclusive books that feel worth owning, not just worth skimming.</p>
+            <div className="feature-icon">🏆</div>
+            <h3>Book of the Week</h3>
+            <p>Discover our weekly featured book selection curated for maximum impact.</p>
           </div>
           <div className="feature-card glass">
-            <div className="feature-icon">🔗</div>
-            <h3>Referral Network</h3>
-            <p>Buy once, share value, and build a network that grows with every recommendation.</p>
-          </div>
-          <div className="feature-card glass">
-            <div className="feature-icon">📖</div>
-            <h3>Free Preview</h3>
-            <p>Read preview chapters first so the purchase feels informed, not impulsive.</p>
-          </div>
-          <div className="feature-card glass">
-            <div className="feature-icon">💎</div>
-            <h3>Premium Experience</h3>
-            <p>Enjoy a polished reading journey that makes the full book feel like an upgrade.</p>
+            <div className="feature-icon">⭐</div>
+            <h3>Leader of the Month</h3>
+            <p>Top readers and community leaders recognized for their engagement.</p>
           </div>
         </div>
       </section>

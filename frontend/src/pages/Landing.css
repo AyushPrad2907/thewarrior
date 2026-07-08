@@ -188,6 +188,20 @@
   background: linear-gradient(135deg, rgba(214, 177, 92, 0.16), rgba(255, 255, 255, 0.04));
 }
 
+.hero-back-cover-wrap {
+  margin-bottom: 14px;
+  padding: 12px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(214, 177, 92, 0.16), rgba(255, 255, 255, 0.04));
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hero-back-cover-wrap {
+    display: block;
+  }
+}
+
 .hero-book-cover {
   width: 100%;
   aspect-ratio: 3 / 4;
@@ -417,6 +431,8 @@
   .hero {
     grid-template-columns: 1fr;
     padding: 48px 20px 56px;
+    display: flex;
+    flex-direction: column-reverse;
   }
 
   .hero {
