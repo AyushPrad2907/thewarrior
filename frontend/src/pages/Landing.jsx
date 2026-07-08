@@ -168,7 +168,7 @@ const Landing = () => {
           </div>
         ) : (
           <div className="book-spotlight glass">
-            <img src="/book-cover.jpg" alt="The Warrior In You book cover" className="book-spotlight-cover" />
+            <img src="/book-cover.jpeg" alt="The Warrior In You book cover" className="book-spotlight-cover" />
             <div className="book-spotlight-copy">
               <span className="spotlight-label">Featured title</span>
               <h3 className="spotlight-title">The Warrior In You</h3>

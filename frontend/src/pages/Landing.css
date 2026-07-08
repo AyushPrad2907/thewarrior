@@ -204,8 +204,8 @@
 
 .hero-book-cover {
   width: 100%;
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
   border-radius: 18px;
   display: block;
   box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
