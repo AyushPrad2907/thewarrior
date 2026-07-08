@@ -99,6 +99,9 @@ const Landing = () => {
               Sign In/Sign Up
             </Link>
           </div>
+          <div className="hero-back-cover-wrap">
+            <img src="/book-back-cover.jpg" alt="The Warrior In You book back cover" className="hero-book-cover" />
+          </div>
           <div className="hero-pillars">
             {readerPillars.map((pillar) => (
               <div key={pillar} className="hero-pillar glass">
@@ -110,9 +113,6 @@ const Landing = () => {
         <div className="hero-stats glass">
           <div className="hero-book-cover-wrap">
             <img src="/book-cover.jpeg" alt="The Warrior In You book cover" className="hero-book-cover" />
-          </div>
-          <div className="hero-back-cover-wrap">
-            <img src="/book-back-cover.jpg" alt="The Warrior In You book back cover" className="hero-book-cover" />
           </div>
           <h2>Why this book matters</h2>
           <div className="impact-stats">
