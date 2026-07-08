@@ -141,7 +141,7 @@ const Landing = () => {
         <div className="features-grid">
           <div className="feature-card glass">
             <div className="feature-icon">🏆</div>
-            <h3>Book of the Week</h3>
+            <h3>Leader of the Week</h3>
             <p>Discover our weekly featured book selection curated for maximum impact.</p>
           </div>
           <div className="feature-card glass">
