@@ -454,6 +454,25 @@
 
   .features-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .feature-card {
+    padding: 30px 20px;
+  }
+
+  .feature-icon {
+    font-size: 36px;
+    margin-bottom: 15px;
+  }
+
+  .feature-card h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .feature-card p {
+    font-size: 14px;
   }
 
   .books-grid {

@@ -139,22 +139,22 @@ const Landing = () => {
           The platform is built to reduce hesitation and increase trust so the user feels the value before they buy.
         </p>
         <div className="features-grid">
-          <div className="feature-card glass" data-reveal style={{ '--reveal-delay': '0ms' }}>
+          <div className="feature-card glass">
             <div className="feature-icon">📚</div>
             <h3>Premium Ebooks</h3>
             <p>Access exclusive books that feel worth owning, not just worth skimming.</p>
           </div>
-          <div className="feature-card glass" data-reveal style={{ '--reveal-delay': '120ms' }}>
+          <div className="feature-card glass">
             <div className="feature-icon">🔗</div>
             <h3>Referral Network</h3>
             <p>Buy once, share value, and build a network that grows with every recommendation.</p>
           </div>
-          <div className="feature-card glass" data-reveal style={{ '--reveal-delay': '240ms' }}>
+          <div className="feature-card glass">
             <div className="feature-icon">📖</div>
             <h3>Free Preview</h3>
             <p>Read preview chapters first so the purchase feels informed, not impulsive.</p>
           </div>
-          <div className="feature-card glass" data-reveal style={{ '--reveal-delay': '360ms' }}>
+          <div className="feature-card glass">
             <div className="feature-icon">💎</div>
             <h3>Premium Experience</h3>
             <p>Enjoy a polished reading journey that makes the full book feel like an upgrade.</p>
