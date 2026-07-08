@@ -109,7 +109,7 @@ const Landing = () => {
         </div>
         <div className="hero-stats glass">
           <div className="hero-book-cover-wrap">
-            <img src="/book-cover.jpg" alt="The Warrior In You book cover" className="hero-book-cover" />
+            <img src="/book-cover.jpeg" alt="The Warrior In You book cover" className="hero-book-cover" />
           </div>
           <div className="hero-back-cover-wrap">
             <img src="/book-back-cover.jpg" alt="The Warrior In You book back cover" className="hero-book-cover" />
