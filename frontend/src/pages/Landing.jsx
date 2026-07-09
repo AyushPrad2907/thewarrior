@@ -12,13 +12,12 @@ const Landing = () => {
 
   const impactStats = [
     { value: '1 Book', label: 'One focused journey, no distractions' },
-    { value: 'Preview', label: 'Read first, decide with confidence', hindi: 'यह उत्साह ही जीवन है। जीवन जीत की प्यास है। बाधाओं के सामने झुको मत। अपने पौरुष को पहचानो। कालजयी बनो।' },
-    { value: 'Unlock', label: 'Full access after approval', hindi: 'यह पुस्तक आपके विद्यमान अनंत शक्ति को जाग्रत करने के लिए है। आप अपनी क्षमता को पहचानो। अशेष संभावनाएं आपके कदमों को अपने धरातल पर आकर्षित कर लेंगी। उन कदमों को मत रोको। उन्हें बढ़ने दो। उन्हें पूर्णता की ओर जाने दो।' }
+    { value: 'Preview', label: ' ', hindi: 'जीवन जीत की प्यास है। बाधाओं के सामने झुको मत। अपने पौरुष को पहचानो। कालजयी बनो।' },
+    { value: 'Unlock', label: '  ', hindi: 'यह पुस्तक आपके विद्यमान अनंत शक्ति को जाग्रत करने के लिए है। आप अपनी क्षमता को पहचानो। असंख्य  संभावनाएं आपके कदमों को अपने धरातल पर आकर्षित करेंगे। उन कदमों को मत रोको। उन्हें बढ़ने दो। उन्हें पूर्णता की ओर जाने दो।' }
   ];
 
   const readerPillars = [
     'A single book chosen to move you forward',
-    'A cover that sells the promise before the first page',
     'A premium flow that turns interest into action'
   ];
 
@@ -100,9 +99,9 @@ const Landing = () => {
             </Link>
           </div>
           <div className="hero-hindi-text">
-            <p className="hindi-line">आपके जीवन में क्रांतिकारी बदलाव लाने वाली एक मात्र पुस्तक</p>
-            <p className="hindi-line">आपके समक्ष आने वाली हर चुनौतियों को पराजित करने की क्षमता उत्पन्न करने वाली एक मात्र पुस्तक</p>
-            <p className="hindi-line">आपके जीवन दर्शन को सबसे मजबूत करने वाली एक मात्र पुस्तक</p>
+            <p className="hindi-line">आपके जीवन में क्रांतिकारी बदलाव लाने वाली एक मात्र पुस्तक।</p>
+            <p className="hindi-line">आपके समक्ष आने वाली हर चुनौतियों को पराजित करने की क्षमता उत्पन्न करने वाली एक मात्र पुस्तक।</p>
+            <p className="hindi-line">आपके जीवन दर्शन को सबसे मजबूत करने वाली एक मात्र पुस्तक।</p>
           </div>
           <div className="hero-back-cover-wrap">
             <img src="/book-back-cover.jpg" alt="The Warrior In You book back cover" className="hero-book-cover" />
@@ -129,9 +128,6 @@ const Landing = () => {
               </div>
             ))}
           </div>
-          <div className="hero-note">
-            यह पेज किताब खरीदने से पहले ही उसके आइडिया को बेचने के लिए बनाया गया है: इसमें एक साफ़ वादा, एक दमदार कवर और किताब खरीदने का आसान तरीका शामिल है।
-          </div>
         </div>
       </section>
 
@@ -142,7 +138,7 @@ const Landing = () => {
       <section className="features" data-reveal>
         <h2 className="section-title">Why readers choose THE WARRIOR IN YOU</h2>
         <p className="section-subtitle">
-          आपके जीवन में बदलाव लाने वाली एक प्रसिद्ध पुस्तक जो मष्तिष्क में आशा की भावना को जन्म देती है सकारात्मक सोच से आप अपने जीवन बदलने की संकल्प लेती हो। आप यह मानती हो इतिहास के प्रवाह में प्रवाहित नहीं बल्कि इतिहास की दिशा बदलने की शक्ति उत्पन्न करती हो।
+          आपके जीवन में बदलाव लाने वाली एक प्रसिद्ध पुस्तक जो मष्तिष्क में आशा की भावना को जन्म देती है सकारात्मक सोच से आप अपने जीवन बदलने की संकल्प लेती हैं । आप यह मानते हैं की इतिहास के प्रवाह में प्रवाहित नहीं बल्कि इतिहास की दिशा बदलने की शक्ति उत्पन्न करती हैं ।
         </p>
         <div className="features-grid">
           <div className="feature-card glass">
@@ -162,7 +158,6 @@ const Landing = () => {
       <section className="books-section" data-reveal>
         <div className="books-heading">
           <h2 className="section-title">Featured Book</h2>
-          <p className="section-subtitle">This is the one book the page is built around. It should feel like the obvious choice.</p>
         </div>
         {loading ? (
           <LoadingSpinner />
@@ -178,6 +173,7 @@ const Landing = () => {
             <div className="book-spotlight-copy">
               <span className="spotlight-label">Featured title</span>
               <h3 className="spotlight-title">The Warrior In You</h3>
+              <p className="spotlight-author">Written by KN Jha</p>
               <p className="spotlight-text">
                 प्रत्येक मनुष्य अपने भाग्य का निर्माता खुद है। अपने जीवन रूपी सागर के मंथन के लिए मनुष्य को अपने अंदर स्थित महान योद्धा को जानना ही होगा जो असीमित शक्ति से युक्त है।
               </p>
@@ -192,7 +188,6 @@ const Landing = () => {
       {/* CTA Section */}
       <section className="cta-section glass" data-reveal>
         <h2 className="cta-title">If you are serious about growth, start here.</h2>
-        <p className="cta-subtitle">Pick a book, read the preview, and buy the one that feels like the next step in your journey.</p>
         <p className="cta-subtitle">
           आप जीवन के किसी भी क्षेत्र में क्यों शिखर पर पहुँचने की क्षमता रखते हो यह पुस्तक को अवश्य पढ़ें और कर्तव्य पर डटे। आपका उज्जवल भविष्य का आधार ही वर्तमान का निर्णय है। आगे बढ़ें और जीवन की सार्थकता को स्पष्ट करें।
         </p>

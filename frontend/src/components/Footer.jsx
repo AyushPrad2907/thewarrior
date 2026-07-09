@@ -5,12 +5,7 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-container">
-        <div className="footer-section">
-          <h3 className="footer-title">THE WARRIOR IN YOU</h3>
-          <p className="footer-description">
-            Premium ebook platform with exclusive content, a powerful referral system, and a single featured book experience.
-          </p>
-        </div>
+        
 
         <div className="footer-section">
           <h4 className="footer-heading">Quick Links</h4>
