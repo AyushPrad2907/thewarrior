@@ -12,8 +12,8 @@ const Landing = () => {
 
   const impactStats = [
     { value: '1 Book', label: 'One focused journey, no distractions' },
-    { value: 'Preview', label: 'Read first, decide with confidence' },
-    { value: 'Unlock', label: 'Full access after approval' }
+    { value: 'Preview', label: 'Read first, decide with confidence', hindi: 'यह उत्साह ही जीवन है। जीवन जीत की प्यास है। बाधाओं के सामने झुको मत। अपने पौरुष को पहचानो। कालजयी बनो।' },
+    { value: 'Unlock', label: 'Full access after approval', hindi: 'यह पुस्तक आपके विद्यमान अनंत शक्ति को जाग्रत करने के लिए है। आप अपनी क्षमता को पहचानो। अशेष संभावनाएं आपके कदमों को अपने धरातल पर आकर्षित कर लेंगी। उन कदमों को मत रोको। उन्हें बढ़ने दो। उन्हें पूर्णता की ओर जाने दो।' }
   ];
 
   const readerPillars = [
@@ -99,6 +99,11 @@ const Landing = () => {
               Sign In/Sign Up
             </Link>
           </div>
+          <div className="hero-hindi-text">
+            <p className="hindi-line">आपके जीवन में क्रांतिकारी बदलाव लाने वाली एक मात्र पुस्तक</p>
+            <p className="hindi-line">आपके समक्ष आने वाली हर चुनौतियों को पराजित करने की क्षमता उत्पन्न करने वाली एक मात्र पुस्तक</p>
+            <p className="hindi-line">आपके जीवन दर्शन को सबसे मजबूत करने वाली एक मात्र पुस्तक</p>
+          </div>
           <div className="hero-back-cover-wrap">
             <img src="/book-back-cover.jpg" alt="The Warrior In You book back cover" className="hero-book-cover" />
           </div>
@@ -120,6 +125,7 @@ const Landing = () => {
               <div key={stat.label} className="impact-stat">
                 <span className="impact-value">{stat.value}</span>
                 <span className="impact-label">{stat.label}</span>
+                {stat.hindi && <span className="impact-hindi">{stat.hindi}</span>}
               </div>
             ))}
           </div>

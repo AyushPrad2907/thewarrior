@@ -243,6 +243,35 @@
   line-height: 1.5;
 }
 
+.impact-hindi {
+  display: block;
+  margin-top: 8px;
+  color: var(--text-white);
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.hero-hindi-text {
+  margin-top: 24px;
+  padding: 20px;
+  border-radius: 16px;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.hindi-line {
+  color: var(--text-white);
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.hindi-line:last-child {
+  margin-bottom: 0;
+}
+
 .hero-note {
   margin-top: 14px;
   color: var(--text-white);
@@ -461,6 +490,22 @@
 
   .hero-stats {
     padding: 20px;
+  }
+
+  .hero-hindi-text {
+    padding: 16px;
+    margin-top: 20px;
+  }
+
+  .hindi-line {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 10px;
+  }
+
+  .impact-hindi {
+    font-size: 12px;
+    line-height: 1.5;
   }
 
   .section-title {
