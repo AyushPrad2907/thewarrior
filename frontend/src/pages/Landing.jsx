@@ -13,7 +13,7 @@ const Landing = () => {
   const impactStats = [
     { value: '1 Book', label: 'One focused journey, no distractions' },
     { value: 'Preview', label: 'Read first, decide with confidence', hindi: 'यह उत्साह ही जीवन है। जीवन जीत की प्यास है। बाधाओं के सामने झुको मत। अपने पौरुष को पहचानो। कालजयी बनो।' },
-    { value: 'Unlock', label: 'Full access after approval', hindi: 'यह पुस्तक आपके विद्यमान अनंत शक्ति को जाग्रत करने के लिए है। आप अपनी क्षमता को पहचानो। अशेष संभावनाएं आपके कदमों को अपने धरातल पर आकर्षित कर लेंगी। उन कदमों को मत रोको। उन्हें बढ़ने दो। उन्हें पूर्णता की ओर जाने दो।' }
+    { value: 'Unlock', label: 'Full access after approval', hindi: 'यह पुस्तक आपके विद्यमान अनंत शक्ति को जाग्रत करने के लिए है। आप अपनी क्षमता को पहचानो। अशेष संभावनाएं आपके कदमों को अपने धरातल पर आकर्षित कर लेंगी। उन कदमों को मत रोको। उन्हें बढ़ने दो। उन्हें पूर्णता की ओर जाने दो।' }
   ];
 
   const readerPillars = [
@@ -142,7 +142,7 @@ const Landing = () => {
       <section className="features" data-reveal>
         <h2 className="section-title">Why readers choose THE WARRIOR IN YOU</h2>
         <p className="section-subtitle">
-          यह प्लेटफ़ॉर्म झिझक कम करने और भरोसा बढ़ाने के लिए बनाया गया है, ताकि यूज़र कुछ भी खरीदने से पहले ही उसकी वैल्यू को समझ सकें।
+          आपके जीवन में बदलाव लाने वाली एक प्रसिद्ध पुस्तक जो मष्तिष्क में आशा की भावना को जन्म देती है सकारात्मक सोच से आप अपने जीवन बदलने की संकल्प लेती हो। आप यह मानती हो इतिहास के प्रवाह में प्रवाहित नहीं बल्कि इतिहास की दिशा बदलने की शक्ति उत्पन्न करती हो।
         </p>
         <div className="features-grid">
           <div className="feature-card glass">
@@ -179,7 +179,7 @@ const Landing = () => {
               <span className="spotlight-label">Featured title</span>
               <h3 className="spotlight-title">The Warrior In You</h3>
               <p className="spotlight-text">
-                A focused, motivational book experience designed to push the reader into action.
+                प्रत्येक मनुष्य अपने भाग्य का निर्माता खुद है। अपने जीवन रूपी सागर के मंथन के लिए मनुष्य को अपने अंदर स्थित महान योद्धा को जानना ही होगा जो असीमित शक्ति से युक्त है।
               </p>
               <Link to="/signup" className="btn btn-primary">
                 Get the Book
@@ -193,6 +193,9 @@ const Landing = () => {
       <section className="cta-section glass" data-reveal>
         <h2 className="cta-title">If you are serious about growth, start here.</h2>
         <p className="cta-subtitle">Pick a book, read the preview, and buy the one that feels like the next step in your journey.</p>
+        <p className="cta-subtitle">
+          आप जीवन के किसी भी क्षेत्र में क्यों शिखर पर पहुँचने की क्षमता रखते हो यह पुस्तक को अवश्य पढ़ें और कर्तव्य पर डटे। आपका उज्जवल भविष्य का आधार ही वर्तमान का निर्णय है। आगे बढ़ें और जीवन की सार्थकता को स्पष्ट करें।
+        </p>
         <Link to="/signup" className="btn btn-primary cta-button">
           Buy Your First Book
         </Link>
