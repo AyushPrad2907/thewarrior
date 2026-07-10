@@ -173,7 +173,7 @@ const Landing = () => {
             <div className="book-spotlight-copy">
               <span className="spotlight-label">Featured title</span>
               <h3 className="spotlight-title">The Warrior In You</h3>
-              <p className="spotlight-author">Written by KN Jha</p>
+              <p className="spotlight-author">Written by {books.length === 0 ? 'KN Jha' : (books[0]?.author === 'Ayush Pradhan' ? 'KN Jha' : books[0]?.author || 'KN Jha')}</p>
               <p className="spotlight-text">
                 प्रत्येक मनुष्य अपने भाग्य का निर्माता खुद है। अपने जीवन रूपी सागर के मंथन के लिए मनुष्य को अपने अंदर स्थित महान योद्धा को जानना ही होगा जो असीमित शक्ति से युक्त है।
               </p>
@@ -183,6 +183,60 @@ const Landing = () => {
             </div>
           </div>
         )}
+      </section>
+
+      {/* Referral Info Box */}
+      <div className="referral-info-box glass" data-reveal>
+        <div className="referral-info-header">
+          <span className="referral-info-icon">🔗</span>
+          <h3>How Our Referral System Works</h3>
+        </div>
+        <p className="referral-info-text">
+          Share your unique referral link with friends and family. When they sign up and purchase
+          the book through your link, you earn rewards for every successful referral. Your referrals
+          also get special discounts. You can track your entire referral network and commission from
+          your personal dashboard.
+        </p>
+        <div className="referral-info-steps">
+          <div className="referral-info-step">
+            <span className="step-num">1</span>
+            <span>Sign up and get your unique referral link</span>
+          </div>
+          <div className="referral-info-step">
+            <span className="step-num">2</span>
+            <span>Share it with others on social media, WhatsApp, or in person</span>
+          </div>
+          <div className="referral-info-step">
+            <span className="step-num">3</span>
+            <span>Earn rewards when they purchase the book through your link</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Referral Section */}
+      <section className="referral-section glass" data-reveal>
+        <div className="referral-icon">🎁</div>
+        <h2 className="referral-title">Share & Earn with Our Referral Program</h2>
+        <p className="referral-description">
+          Love "The Warrior In You"? Share it with your friends and family! When someone purchases the book through your unique referral link, both you and your friend receive exclusive rewards. Build your network, inspire others, and earn benefits together.
+        </p>
+        <div className="referral-benefits">
+          <div className="referral-benefit">
+            <span className="benefit-icon">💰</span>
+            <span className="benefit-text">Earn rewards for every successful referral</span>
+          </div>
+          <div className="referral-benefit">
+            <span className="benefit-icon">🌟</span>
+            <span className="benefit-text">Your referrals get special discounts</span>
+          </div>
+          <div className="referral-benefit">
+            <span className="benefit-icon">📊</span>
+            <span className="benefit-text">Track your referrals in your dashboard</span>
+          </div>
+        </div>
+        <Link to="/signup" className="btn btn-primary referral-button">
+          Start Referring Now
+        </Link>
       </section>
 
       {/* CTA Section */}

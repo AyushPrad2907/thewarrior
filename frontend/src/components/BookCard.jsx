@@ -4,6 +4,7 @@ import './BookCard.css';
 
 const BookCard = ({ book }) => {
   const coverImage = book.coverImage ? getBackendAssetUrl(book.coverImage) : '/book-cover.jpg';
+  const displayAuthor = book.author === 'Ayush Pradhan' ? 'KN Jha' : book.author;
 
   return (
     <div className="book-card card fade-in reveal-card" data-reveal>
@@ -21,7 +22,7 @@ const BookCard = ({ book }) => {
       </div>
       <div className="book-info">
         <h3 className="book-title">{book.title}</h3>
-        <p className="book-author">by {book.author}</p>
+        <p className="book-author">by {displayAuthor}</p>
         <p className="book-description">{book.description}</p>
         <div className="book-footer">
           <span className="book-price">₹{book.price}</span>

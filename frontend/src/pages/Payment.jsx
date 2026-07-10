@@ -94,7 +94,7 @@ const Payment = () => {
         
         <div className="book-summary">
           <h2>{book.title}</h2>
-          <p className="book-author">by {book.author}</p>
+          <p className="book-author">by {book.author === 'Ayush Pradhan' ? 'KN Jha' : book.author}</p>
           <p className="book-price">Amount: ₹{book.price}</p>
         </div>
 

@@ -77,7 +77,7 @@ const BookDetails = () => {
         <div className="book-info-section">
           <div className="detail-kicker">Your next breakthrough starts here</div>
           <h1 className="detail-title">{book.title}</h1>
-          <p className="detail-author">by {book.author}</p>
+          <p className="detail-author">by {book.author === 'Ayush Pradhan' ? 'KN Jha' : book.author}</p>
           <div className="detail-meta">
             <span className="detail-category">{book.category}</span>
             <span className="detail-price">₹{book.price}</span>

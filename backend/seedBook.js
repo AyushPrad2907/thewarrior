@@ -13,7 +13,7 @@ const coverDestinationPath = path.join(rootDir, 'uploads', 'covers', 'book-cover
 const bookData = {
   title: 'The Warrior In You',
   description: 'A focused motivational ebook designed to push the reader into action and turn intention into momentum.',
-  author: 'Ayush Pradhan',
+  author: 'KN Jha',
   price: 300,
   category: 'self-help',
   coverImage: 'uploads/covers/book-cover.jpg',

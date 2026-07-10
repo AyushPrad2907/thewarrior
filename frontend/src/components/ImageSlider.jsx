@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+
 import './ImageSlider.css';
 
 const ImageSlider = () => {
