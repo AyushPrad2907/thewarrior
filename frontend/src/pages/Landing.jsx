@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { booksAPI } from '../services/api';
+import { booksAPI, getBackendAssetUrl } from '../services/api';
 import BookCard from '../components/BookCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ImageSlider from '../components/ImageSlider';
@@ -161,27 +161,30 @@ const Landing = () => {
         </div>
         {loading ? (
           <LoadingSpinner />
-        ) : books.length > 0 ? (
-          <div className="books-grid">
-            {books.slice(0, 1).map(book => (
-              <BookCard key={book._id} book={book} />
-            ))}
-          </div>
         ) : (
-          <div className="book-spotlight glass">
-            <img src="/book-cover.jpg" alt="The Warrior In You book cover" className="book-spotlight-cover" />
-            <div className="book-spotlight-copy">
-              <span className="spotlight-label">Featured title</span>
-              <h3 className="spotlight-title">The Warrior In You</h3>
-              <p className="spotlight-author">Written by {books.length === 0 ? 'KN Jha' : (books[0]?.author === 'Ayush Pradhan' ? 'KN Jha' : books[0]?.author || 'KN Jha')}</p>
-              <p className="spotlight-text">
-                प्रत्येक मनुष्य अपने भाग्य का निर्माता खुद है। अपने जीवन रूपी सागर के मंथन के लिए मनुष्य को अपने अंदर स्थित महान योद्धा को जानना ही होगा जो असीमित शक्ति से युक्त है।
-              </p>
-              <Link to="/signup" className="btn btn-primary">
-                Get the Book
-              </Link>
-            </div>
-          </div>
+          (() => {
+            const featuredBook = books[0];
+            const coverImage = featuredBook?.coverImage ? getBackendAssetUrl(featuredBook.coverImage) : '/book-cover.jpg';
+            const displayTitle = featuredBook?.title || 'The Warrior In You';
+            const displayAuthor = featuredBook?.author === 'Ayush Pradhan' ? 'KN Jha' : (featuredBook?.author || 'KN Jha');
+            const displayDescription = featuredBook?.description || 'प्रत्येक मनुष्य अपने भाग्य का निर्माता खुद है। अपने जीवन रूपी सागर के मंथन के लिए मनुष्य को अपने अंदर स्थित महान योद्धा को जानना ही होगा जो असीमित शक्ति से युक्त है।';
+            const linkTarget = featuredBook ? `/book/${featuredBook._id}` : '/signup';
+
+            return (
+              <div className="book-spotlight glass">
+                <img src={coverImage} alt={`${displayTitle} book cover`} className="book-spotlight-cover" />
+                <div className="book-spotlight-copy">
+                  <span className="spotlight-label">Featured title</span>
+                  <h3 className="spotlight-title">{displayTitle}</h3>
+                  <p className="spotlight-author">by {displayAuthor}</p>
+                  <p className="spotlight-text">{displayDescription}</p>
+                  <Link to={linkTarget} className="btn btn-primary">
+                    {featuredBook ? 'View Details' : 'Get the Book'}
+                  </Link>
+                </div>
+              </div>
+            );
+          })()
         )}
       </section>
 
