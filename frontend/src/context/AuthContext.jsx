@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import axios from 'axios';
 
 const AuthContext = createContext(null);
@@ -16,33 +16,33 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  const login = (userData, userToken) => {
+  const login = useCallback((userData, userToken) => {
     setUser(userData);
     setToken(userToken);
     localStorage.setItem('token', userToken);
     localStorage.setItem('user', JSON.stringify(userData));
-  };
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     setUser(null);
     setToken(null);
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-  };
+  }, []);
 
-  const updateUser = (userData) => {
+  const updateUser = useCallback((userData) => {
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));
-  };
+  }, []);
 
-  const value = {
+  const value = useMemo(() => ({
     user,
     token,
     loading,
     login,
     logout,
     updateUser
-  };
+  }), [user, token, loading, login, logout, updateUser]);
 
   return (
     <AuthContext.Provider value={value}>

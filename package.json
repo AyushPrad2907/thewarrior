@@ -1,0 +1,20 @@
+{
+  "name": "thewarrior",
+  "version": "1.0.0",
+  "private": true,
+  "description": "THE WARRIOR - Premium Ebook Platform with Referral Networking",
+  "scripts": {
+    "install:frontend": "cd frontend && npm install",
+    "install:backend": "cd backend && npm install",
+    "install:all": "npm run install:frontend && npm run install:backend",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "build:frontend": "cd frontend && npm run build",
+    "start:backend": "cd backend && npm start",
+    "setup": "cd backend && npm run setup",
+    "dev": "cd frontend && npm run dev"
+  },
+  "keywords": ["ebook", "referral", "mern"],
+  "author": "",
+  "license": "ISC"
+}

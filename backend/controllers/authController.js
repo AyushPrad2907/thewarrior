@@ -151,18 +151,31 @@ exports.login = async (req, res) => {
 // @access  Private
 exports.getMe = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id).populate('purchasedBooks');
-    
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: 'User not found'
-      });
-    }
-
-    res.json({
-      success: true,
-      user: {
+    let userData;
+    if (req.user.role === 'admin') {
+      const admin = await Admin.findById(req.user._id);
+      if (!admin) {
+        return res.status(404).json({
+          success: false,
+          message: 'Admin not found'
+        });
+      }
+      userData = {
+        id: admin._id,
+        name: admin.name,
+        email: admin.email,
+        role: admin.role,
+        createdAt: admin.createdAt
+      };
+    } else {
+      const user = await User.findById(req.user._id).populate('purchasedBooks');
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: 'User not found'
+        });
+      }
+      userData = {
         id: user._id,
         name: user.name,
         email: user.email,
@@ -173,7 +186,12 @@ exports.getMe = async (req, res) => {
         purchasedBooks: user.purchasedBooks,
         paymentStatus: user.paymentStatus,
         createdAt: user.createdAt
-      }
+      };
+    }
+
+    res.json({
+      success: true,
+      user: userData
     });
   } catch (error) {
     res.status(500).json({

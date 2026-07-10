@@ -40,7 +40,7 @@ exports.submitPayment = async (req, res) => {
 
     // Check if user already purchased this book
     const user = await User.findById(req.user._id);
-    if (user.purchasedBooks.includes(bookId)) {
+    if (user.purchasedBooks.some(id => id.toString() === bookId.toString())) {
       return res.status(400).json({
         success: false,
         message: 'You have already purchased this book'
@@ -156,7 +156,7 @@ exports.approvePayment = async (req, res) => {
 
     // Add book to user's purchased books
     const user = await User.findById(payment.user);
-    if (!user.purchasedBooks.includes(payment.book)) {
+    if (!user.purchasedBooks.some(id => id.toString() === payment.book.toString())) {
       user.purchasedBooks.push(payment.book);
       await user.save();
     }

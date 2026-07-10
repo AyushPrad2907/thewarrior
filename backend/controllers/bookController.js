@@ -204,7 +204,7 @@ exports.getFullEpub = async (req, res) => {
     }
 
     // Check if user has purchased this book
-    if (!user.purchasedBooks.includes(book._id)) {
+    if (!user.purchasedBooks.some(id => id.toString() === book._id.toString())) {
       return res.status(403).json({
         success: false,
         message: 'You have not purchased this book'

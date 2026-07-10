@@ -24,7 +24,12 @@ const BookDetails = () => {
       
       // Check if user has purchased this book
       if (user && user.purchasedBooks) {
-        setIsPurchased(user.purchasedBooks.some(purchasedBook => purchasedBook._id === id));
+        setIsPurchased(user.purchasedBooks.some(purchasedBook => {
+          if (typeof purchasedBook === 'object' && purchasedBook !== null) {
+            return (purchasedBook._id || purchasedBook.id) === id;
+          }
+          return purchasedBook === id;
+        }));
       }
     } catch (error) {
       console.error('Error fetching book details:', error);

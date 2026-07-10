@@ -45,7 +45,12 @@ const UserDashboard = () => {
   }
 
   const purchasedBooks = books.filter(book => 
-    user?.purchasedBooks?.some(purchased => purchased._id === book._id)
+    user?.purchasedBooks?.some(purchased => {
+      if (typeof purchased === 'object' && purchased !== null) {
+        return (purchased._id || purchased.id) === book._id;
+      }
+      return purchased === book._id;
+    })
   );
 
   return (

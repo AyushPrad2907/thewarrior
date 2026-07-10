@@ -2,11 +2,22 @@
   max-width: 800px;
   margin: 40px auto;
   padding: 0 20px;
+  overflow-x: hidden;
 }
+
 
 .payment-card {
   padding: 40px;
+  min-width: 0;
 }
+
+/* Prevent awkward overflow/wrapping issues on very small screens */
+.payment-card,
+.payment-container {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
 
 .payment-title {
   font-size: 32px;
@@ -164,16 +175,22 @@
 
 @media (max-width: 768px) {
   .payment-container {
-    margin: 24px auto 40px;
-    padding: 0 16px;
+    margin: 20px auto 32px;
+    padding: 0 14px;
   }
 
   .payment-card {
-    padding: 24px 18px;
+    padding: 22px 14px;
   }
 
   .payment-title {
     font-size: 26px;
+    margin-bottom: 18px;
+  }
+
+  .book-summary {
+    padding: 18px;
+    margin-bottom: 18px;
   }
 
   .book-summary h2 {
@@ -182,15 +199,75 @@
 
   .payment-instructions h3 {
     font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .qr-section {
+    margin-bottom: 16px;
+  }
+
+  .qr-code,
+  .qr-image {
+    width: 150px;
+    height: 150px;
   }
 
   .qr-code {
-    width: 160px;
-    height: 160px;
+    padding: 16px;
+    border-radius: 16px;
   }
 
-  .payment-button,
+  .qr-image {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .upi-details {
+    padding: 16px;
+  }
+
+  .payment-steps {
+    padding: 16px;
+  }
+
+  .payment-steps ol {
+    margin-left: 16px;
+  }
+
+  .payment-button {
+    font-size: 14px;
+    padding: 14px;
+  }
+
   .cancel-button {
     font-size: 14px;
+    padding: 12px;
+    margin-top: 12px;
   }
 }
+
+/* Extra small devices */
+@media (max-width: 420px) {
+  .payment-title {
+    font-size: 22px;
+  }
+
+  .payment-card {
+    padding: 18px 12px;
+  }
+
+  .qr-code,
+  .qr-image {
+    width: 130px;
+    height: 130px;
+  }
+
+  .book-summary h2 {
+    font-size: 18px;
+  }
+
+  .payment-instructions h3 {
+    font-size: 16px;
+  }
+}
+

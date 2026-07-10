@@ -12,11 +12,11 @@ const PaymentVerification = () => {
 
   useEffect(() => {
     fetchPayments();
-  }, [filter]);
+  }, []);
 
   const fetchPayments = async () => {
     try {
-      const response = await paymentsAPI.getAll(filter === 'all' ? '' : filter);
+      const response = await paymentsAPI.getAll();
       setPayments(response.data.payments);
     } catch (error) {
       console.error('Error fetching payments:', error);
@@ -68,6 +68,10 @@ const PaymentVerification = () => {
     }
   };
 
+  const filteredPayments = filter === 'all'
+    ? payments
+    : payments.filter(p => p.status === filter);
+
   if (loading) {
     return <LoadingSpinner />;
   }
@@ -105,9 +109,9 @@ const PaymentVerification = () => {
       </div>
 
       <div className="payments-list glass">
-        {payments.length > 0 ? (
+        {filteredPayments.length > 0 ? (
           <div className="payments-grid">
-            {payments.map(payment => (
+            {filteredPayments.map(payment => (
               <div key={payment._id} className="payment-card">
                 <div className="payment-header">
                   <div className="payment-user">

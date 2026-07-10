@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { booksAPI, paymentsAPI } from '../services/api';
+import { booksAPI, paymentsAPI, getBackendAssetUrl } from '../services/api';
 import LoadingSpinner from '../components/LoadingSpinner';
 import './Payment.css';
 
@@ -104,7 +104,7 @@ const Payment = () => {
             <div className="qr-placeholder">
               {book.qrCodeImage ? (
                 <img 
-                  src={`${import.meta.env.VITE_API_URL?.replace('/api', '')}/uploads/${book.qrCodeImage.replace(/^uploads[\\/]+/, '')}`} 
+                  src={getBackendAssetUrl(book.qrCodeImage)} 
                   alt="Payment QR Code" 
                   className="qr-image"
                 />
