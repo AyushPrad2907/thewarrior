@@ -1,0 +1,9 @@
+# Prevent aggressive caching for images so updates are picked up
+/*.jpg
+  Cache-Control: public, max-age=3600, must-revalidate
+/*.png
+  Cache-Control: public, max-age=3600, must-revalidate
+
+# Cache JS/CSS with content hashes for longer
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
