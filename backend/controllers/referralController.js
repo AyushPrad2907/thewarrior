@@ -3,6 +3,12 @@ const Payment = require('../models/Payment');
 
 const REFERRAL_COMMISSION_RATE = 0.1;
 
+// Helper: always compute referral link dynamically from env
+const buildReferralLink = (referralCode) => {
+  const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:5173').replace(/\/+$/, '');
+  return `${frontendUrl}/signup?ref=${referralCode}`;
+};
+
 // @desc    Get user's referral network
 // @route   GET /api/referrals/my-network
 // @access  Private
@@ -76,7 +82,7 @@ exports.getMyNetwork = async (req, res) => {
     res.json({
       success: true,
       referralCode: user.referralCode,
-      referralLink: user.referralLink,
+      referralLink: buildReferralLink(user.referralCode),
       directReferrals: directReferralsWithStatus,
       secondLevelReferrals: secondLevelReferralsWithStatus,
       stats: {

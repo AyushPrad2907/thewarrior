@@ -2,6 +2,12 @@ const User = require('../models/User');
 const Admin = require('../models/Admin');
 const { generateToken } = require('../middleware/auth');
 
+// Helper: always compute referral link dynamically from env — never trust stored value
+const buildReferralLink = (referralCode) => {
+  const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:5173').replace(/\/+$/, '');
+  return `${frontendUrl}/signup?ref=${referralCode}`;
+};
+
 // @desc    Register a new user
 // @route   POST /api/auth/signup
 // @access  Public
@@ -57,7 +63,7 @@ exports.signup = async (req, res) => {
       password,
       upiIds: [upiId.trim()],
       referralCode: newReferralCode,
-      referralLink: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/signup?ref=${newReferralCode}`,
+      referralLink: buildReferralLink(newReferralCode),
       parentUserId: parentUser ? parentUser._id : null
     });
 
@@ -75,7 +81,7 @@ exports.signup = async (req, res) => {
         phone: user.phone,
         upiIds: user.upiIds,
         referralCode: user.referralCode,
-        referralLink: user.referralLink,
+        referralLink: buildReferralLink(user.referralCode),
         role: user.role
       }
     });
@@ -144,7 +150,7 @@ exports.login = async (req, res) => {
         phone: user.phone,
         upiIds: user.upiIds || [],
         referralCode: user.referralCode,
-        referralLink: user.referralLink,
+        referralLink: buildReferralLink(user.referralCode),
         role: user.role,
         purchasedBooks: user.purchasedBooks
       }
@@ -193,7 +199,7 @@ exports.getMe = async (req, res) => {
         phone: user.phone,
         upiIds: user.upiIds || [],
         referralCode: user.referralCode,
-        referralLink: user.referralLink,
+        referralLink: buildReferralLink(user.referralCode),
         role: user.role,
         purchasedBooks: user.purchasedBooks,
         paymentStatus: user.paymentStatus,
