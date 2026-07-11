@@ -30,7 +30,6 @@ const Footer = () => {
           <ul className="footer-links">
             <li><a href="mailto:support@warrior.com?subject=Privacy%20Policy">Privacy Policy</a></li>
             <li><a href="mailto:support@warrior.com?subject=Terms%20of%20Service">Terms of Service</a></li>
-            <li><a href="mailto:support@warrior.com?subject=Refund%20Policy">Refund Policy</a></li>
           </ul>
         </div>
       </div>
