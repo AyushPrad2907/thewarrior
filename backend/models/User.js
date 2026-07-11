@@ -38,7 +38,11 @@ const userSchema = new mongoose.Schema({
   },
   referralLink: {
     type: String,
-    required: true
+    required: true,
+    get: function() {
+      const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+      return `${frontendUrl}/signup?ref=${this.referralCode}`;
+    }
   },
   parentUserId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -72,7 +76,9 @@ const userSchema = new mongoose.Schema({
     default: Date.now
   }
 }, {
-  timestamps: true
+  timestamps: true,
+  toJSON: { getters: true },
+  toObject: { getters: true }
 });
 
 // Hash password before saving
