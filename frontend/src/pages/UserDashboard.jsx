@@ -1,17 +1,68 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { booksAPI, paymentsAPI, getBackendAssetUrl } from '../services/api';
+import { booksAPI, paymentsAPI, authAPI, getBackendAssetUrl } from '../services/api';
 import LoadingSpinner from '../components/LoadingSpinner';
 import BookCard from '../components/BookCard';
 import './UserDashboard.css';
 
 const UserDashboard = () => {
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
   const navigate = useNavigate();
   const [books, setBooks] = useState([]);
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // UPI IDs States
+  const [newUpi, setNewUpi] = useState('');
+  const [upiSubmitting, setUpiSubmitting] = useState(false);
+  const [upiError, setUpiError] = useState('');
+  const [upiSuccess, setUpiSuccess] = useState('');
+
+  const handleAddUpi = async (e) => {
+    e.preventDefault();
+    setUpiError('');
+    setUpiSuccess('');
+
+    if (!newUpi || !newUpi.trim()) {
+      setUpiError('Please enter a valid UPI ID');
+      return;
+    }
+
+    setUpiSubmitting(true);
+
+    try {
+      const response = await authAPI.addUpiId(newUpi);
+      const updatedUser = { ...user, upiIds: response.data.upiIds };
+      updateUser(updatedUser);
+      setNewUpi('');
+      setUpiSuccess('UPI ID added successfully!');
+      setTimeout(() => setUpiSuccess(''), 3000);
+    } catch (err) {
+      setUpiError(err.response?.data?.message || 'Failed to add UPI ID');
+    } finally {
+      setUpiSubmitting(false);
+    }
+  };
+
+  const handleDeleteUpi = async (upiIdToDelete) => {
+    if (!window.confirm(`Are you sure you want to delete ${upiIdToDelete}?`)) {
+      return;
+    }
+
+    setUpiError('');
+    setUpiSuccess('');
+
+    try {
+      const response = await authAPI.deleteUpiId(upiIdToDelete);
+      const updatedUser = { ...user, upiIds: response.data.upiIds };
+      updateUser(updatedUser);
+      setUpiSuccess('UPI ID deleted successfully!');
+      setTimeout(() => setUpiSuccess(''), 3000);
+    } catch (err) {
+      setUpiError(err.response?.data?.message || 'Failed to delete UPI ID');
+    }
+  };
 
   useEffect(() => {
     fetchData();
@@ -191,6 +242,57 @@ const UserDashboard = () => {
           </button>
         </div>
         <p className="referral-note">Share this link to earn referrals!</p>
+      </div>
+
+      {/* UPI IDs Management */}
+      <div className="dashboard-section glass upi-management-section">
+        <h2>My UPI IDs</h2>
+        <p className="upi-management-subtitle">Manage your UPI IDs for referral payouts (minimum 1, maximum 3)</p>
+        
+        <div className="upi-list">
+          {user?.upiIds && user.upiIds.length > 0 ? (
+            user.upiIds.map((upi, index) => (
+              <div key={upi} className="upi-item glass">
+                <div className="upi-item-content">
+                  <span className="upi-badge-number">#{index + 1}</span>
+                  <span className="upi-text">{upi}</span>
+                </div>
+                {user.upiIds.length > 1 ? (
+                  <button 
+                    onClick={() => handleDeleteUpi(upi)} 
+                    className="btn-delete-upi"
+                    title="Delete UPI ID"
+                  >
+                    🗑️
+                  </button>
+                ) : (
+                  <span className="upi-primary-badge">Primary</span>
+                )}
+              </div>
+            ))
+          ) : (
+            <p className="upi-empty-text">No UPI IDs found. Please add at least one.</p>
+          )}
+        </div>
+
+        {(!user?.upiIds || user.upiIds.length < 3) && (
+          <form onSubmit={handleAddUpi} className="add-upi-form">
+            <input 
+              type="text" 
+              placeholder="Enter new UPI ID (e.g. name@bank)" 
+              value={newUpi}
+              onChange={(e) => setNewUpi(e.target.value)}
+              required
+              className="upi-input"
+            />
+            <button type="submit" className="btn btn-primary add-upi-btn" disabled={upiSubmitting}>
+              {upiSubmitting ? 'Adding...' : 'Add UPI ID'}
+            </button>
+          </form>
+        )}
+        
+        {upiError && <div className="upi-message error">{upiError}</div>}
+        {upiSuccess && <div className="upi-message success">{upiSuccess}</div>}
       </div>
 
       {/* Purchased Books */}

@@ -54,6 +54,10 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Book'
   }],
+  upiIds: {
+    type: [String],
+    default: []
+  },
   paymentStatus: {
     type: String,
     enum: ['none', 'pending', 'verified'],

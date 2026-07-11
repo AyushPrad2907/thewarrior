@@ -7,7 +7,15 @@ const { generateToken } = require('../middleware/auth');
 // @access  Public
 exports.signup = async (req, res) => {
   try {
-    const { name, email, phone, password, referralCode } = req.body;
+    const { name, email, phone, password, referralCode, upiId } = req.body;
+
+    // Check if upiId is provided
+    if (!upiId || !upiId.trim()) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide a UPI ID'
+      });
+    }
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -47,6 +55,7 @@ exports.signup = async (req, res) => {
       email,
       phone,
       password,
+      upiIds: [upiId.trim()],
       referralCode: newReferralCode,
       referralLink: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/signup?ref=${newReferralCode}`,
       parentUserId: parentUser ? parentUser._id : null
@@ -64,6 +73,7 @@ exports.signup = async (req, res) => {
         name: user.name,
         email: user.email,
         phone: user.phone,
+        upiIds: user.upiIds,
         referralCode: user.referralCode,
         referralLink: user.referralLink,
         role: user.role
@@ -132,6 +142,7 @@ exports.login = async (req, res) => {
         name: user.name,
         email: user.email,
         phone: user.phone,
+        upiIds: user.upiIds || [],
         referralCode: user.referralCode,
         referralLink: user.referralLink,
         role: user.role,
@@ -180,6 +191,7 @@ exports.getMe = async (req, res) => {
         name: user.name,
         email: user.email,
         phone: user.phone,
+        upiIds: user.upiIds || [],
         referralCode: user.referralCode,
         referralLink: user.referralLink,
         role: user.role,
@@ -209,4 +221,116 @@ exports.logout = async (req, res) => {
     success: true,
     message: 'Logged out successfully'
   });
+};
+
+// @desc    Add a UPI ID to current user
+// @route   POST /api/auth/upi-ids
+// @access  Private
+exports.addUpiId = async (req, res) => {
+  try {
+    const { upiId } = req.body;
+    if (!upiId || !upiId.trim()) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide a valid UPI ID'
+      });
+    }
+
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    // Check if user already has 3 UPI IDs
+    if (user.upiIds && user.upiIds.length >= 3) {
+      return res.status(400).json({
+        success: false,
+        message: 'You can have a maximum of 3 UPI IDs'
+      });
+    }
+
+    // Check if the UPI ID already exists in the user's list
+    const trimmedUpi = upiId.trim();
+    if (user.upiIds && user.upiIds.includes(trimmedUpi)) {
+      return res.status(400).json({
+        success: false,
+        message: 'This UPI ID is already added'
+      });
+    }
+
+    // Add to list
+    if (!user.upiIds) {
+      user.upiIds = [];
+    }
+    user.upiIds.push(trimmedUpi);
+    await user.save();
+
+    res.json({
+      success: true,
+      message: 'UPI ID added successfully',
+      upiIds: user.upiIds
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Server error adding UPI ID'
+    });
+  }
+};
+
+// @desc    Delete a UPI ID from current user
+// @route   POST /api/auth/upi-ids/delete
+// @access  Private
+exports.deleteUpiId = async (req, res) => {
+  try {
+    const { upiId } = req.body;
+    if (!upiId) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide the UPI ID to delete'
+      });
+    }
+
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    // Ensure they have at least one UPI ID left
+    if (!user.upiIds || user.upiIds.length <= 1) {
+      return res.status(400).json({
+        success: false,
+        message: 'You must keep at least one UPI ID'
+      });
+    }
+
+    const trimmedUpi = upiId.trim();
+    if (!user.upiIds.includes(trimmedUpi)) {
+      return res.status(400).json({
+        success: false,
+        message: 'UPI ID not found in your list'
+      });
+    }
+
+    // Filter out the UPI ID
+    user.upiIds = user.upiIds.filter(id => id !== trimmedUpi);
+    await user.save();
+
+    res.json({
+      success: true,
+      message: 'UPI ID deleted successfully',
+      upiIds: user.upiIds
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Server error deleting UPI ID'
+    });
+  }
 };
