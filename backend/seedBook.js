@@ -14,7 +14,7 @@ const bookData = {
   title: 'The Warrior In You',
   description: 'A focused motivational ebook designed to push the reader into action and turn intention into momentum.',
   author: 'KN Jha',
-  price: 300,
+  price: 100,
   category: 'self-help',
   coverImage: 'uploads/covers/book-cover.jpg',
   previewEpub: 'uploads/previews/preview.pdf',
