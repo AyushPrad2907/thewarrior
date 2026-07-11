@@ -1,8 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { booksAPI, paymentsAPI, getBackendAssetUrl } from '../services/api';
+import { booksAPI, paymentsAPI } from '../services/api';
+import { QRCodeSVG } from 'qrcode.react';
 import LoadingSpinner from '../components/LoadingSpinner';
 import './Payment.css';
+
+const UPI_ID = '7859088239@okbizaxis';
+const UPI_NAME = 'Implex Cart International';
 
 const Payment = () => {
   const { bookId } = useParams();
@@ -16,6 +20,7 @@ const Payment = () => {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     fetchBookDetails();
@@ -29,6 +34,30 @@ const Payment = () => {
       setError('Failed to load book details');
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Dynamic UPI link — auto-updates when book.price changes
+  const upiLink = useMemo(() => {
+    if (!book) return '';
+    return `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(UPI_NAME)}&am=${book.price}&cu=INR&tn=${encodeURIComponent(`Purchase: ${book.title}`)}`;
+  }, [book]);
+
+  const handleCopyUPI = async () => {
+    try {
+      await navigator.clipboard.writeText(UPI_ID);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = UPI_ID;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     }
   };
 
@@ -62,7 +91,7 @@ const Payment = () => {
       formDataToSend.append('utrNumber', formData.utrNumber);
       formDataToSend.append('paymentScreenshot', formData.paymentScreenshot);
 
-      const response = await paymentsAPI.submit(formDataToSend);
+      await paymentsAPI.submit(formDataToSend);
       navigate('/success');
     } catch (error) {
       setError(error.response?.data?.message || 'Payment submission failed');
@@ -100,43 +129,71 @@ const Payment = () => {
 
         <div className="payment-instructions">
           <h3>Payment Instructions</h3>
+
+          {/* Dynamic QR Code */}
           <div className="qr-section">
             <div className="qr-placeholder">
-              {book.qrCodeImage ? (
-                <img 
-                  src={getBackendAssetUrl(book.qrCodeImage)} 
-                  alt="Payment QR Code" 
-                  className="qr-image"
+              <div className="dynamic-qr-wrapper">
+                <QRCodeSVG
+                  value={upiLink}
+                  size={200}
+                  bgColor="#ffffff"
+                  fgColor="#1a1a1a"
+                  level="H"
+                  includeMargin={true}
                 />
-              ) : (
-                <div className="qr-code">
-                  <svg viewBox="0 0 100 100" className="qr-svg">
-                    <rect x="10" y="10" width="30" height="30" fill="#d4af37"/>
-                    <rect x="60" y="10" width="30" height="30" fill="#d4af37"/>
-                    <rect x="10" y="60" width="30" height="30" fill="#d4af37"/>
-                    <rect x="45" y="45" width="10" height="10" fill="#d4af37"/>
-                    <rect x="45" y="45" width="10" height="10" fill="#d4af37"/>
-                    <rect x="20" y="20" width="10" height="10" fill="#1a1a1a"/>
-                    <rect x="70" y="20" width="10" height="10" fill="#1a1a1a"/>
-                    <rect x="20" y="70" width="10" height="10" fill="#1a1a1a"/>
-                  </svg>
-                </div>
-              )}
-              <p>Scan QR Code to Pay</p>
+                <div className="qr-amount-badge">₹{book.price}</div>
+              </div>
+              <p className="qr-label">Scan QR Code to Pay</p>
+              <p className="qr-auto-note">Amount is pre-filled • Auto-synced with book price</p>
             </div>
           </div>
-          
+
+          {/* Pay via UPI Button (deep link for mobile) */}
+          <a href={upiLink} className="upi-pay-button">
+            <span className="upi-pay-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                <path d="M2 17l10 5 10-5"/>
+                <path d="M2 12l10 5 10-5"/>
+              </svg>
+            </span>
+            Pay ₹{book.price} via UPI App
+          </a>
+
           <div className="upi-details">
-            <p><strong>UPI ID:</strong> 7859088239@okbizaxis</p>
+            <div className="upi-id-row">
+              <p><strong>UPI ID:</strong> {UPI_ID}</p>
+              <button 
+                type="button"
+                className="copy-upi-btn" 
+                onClick={handleCopyUPI}
+                title="Copy UPI ID"
+              >
+                {copied ? (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                ) : (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                  </svg>
+                )}
+                {copied ? 'Copied!' : 'Copy'}
+              </button>
+            </div>
+            <p><strong>Payee:</strong> {UPI_NAME}</p>
             <p><strong>Amount:</strong> ₹{book.price}</p>
           </div>
 
           <div className="payment-steps">
             <ol>
-              <li>Scan the QR code or use the UPI ID to make payment</li>
-              <li>After payment, note down the UTR/Reference number</li>
-              <li>Take a screenshot of the payment confirmation</li>
-              <li>Upload the screenshot and enter UTR number below</li>
+              <li>Scan the QR code <strong>or</strong> tap the <em>"Pay via UPI App"</em> button above</li>
+              <li>Complete the payment — amount is pre-filled for you</li>
+              <li>Note down the <strong>UTR / Reference number</strong> from the confirmation</li>
+              <li>Take a <strong>screenshot</strong> of the payment confirmation</li>
+              <li>Upload the screenshot and enter the UTR number below</li>
             </ol>
           </div>
         </div>
