@@ -247,3 +247,138 @@
     width: 100%;
   }
 }
+
+/* Buy Ebook Banner styles */
+.buy-book-banner {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding: 35px;
+  background: linear-gradient(135deg, rgba(20, 20, 20, 0.8) 0%, rgba(35, 30, 15, 0.9) 100%);
+  border: 1px solid rgba(214, 175, 55, 0.3);
+  border-radius: 12px;
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.buy-book-banner::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(214, 175, 55, 0.1) 0%, transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.buy-book-banner-cover {
+  width: 120px;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(214, 175, 55, 0.15);
+  z-index: 1;
+}
+
+.buy-book-banner-content {
+  flex: 1;
+  z-index: 1;
+}
+
+.buy-book-banner-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.buy-book-banner-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-white);
+  margin: 0 0 5px 0;
+}
+
+.buy-book-banner-author {
+  color: var(--text-gray);
+  font-size: 14px;
+  margin: 0 0 12px 0;
+}
+
+.buy-book-banner-description {
+  color: var(--text-gray);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 20px 0;
+  max-width: 700px;
+}
+
+.buy-book-banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.buy-book-banner-price {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
+.buy-book-banner-btn {
+  padding: 12px 28px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.buy-book-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--warning);
+  background: rgba(251, 191, 36, 0.1);
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+.buy-book-status-badge.rejected {
+  color: var(--error);
+  background: rgba(248, 113, 113, 0.1);
+  border: 1px solid rgba(248, 113, 113, 0.2);
+}
+
+@media (max-width: 768px) {
+  .buy-book-banner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 24px 16px;
+    gap: 20px;
+  }
+  
+  .buy-book-banner-cover {
+    width: 100px;
+  }
+  
+  .buy-book-banner-actions {
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+  
+  .buy-book-banner-btn {
+    width: 100%;
+  }
+}

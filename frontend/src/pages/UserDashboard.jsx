@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { booksAPI, paymentsAPI } from '../services/api';
+import { booksAPI, paymentsAPI, getBackendAssetUrl } from '../services/api';
 import LoadingSpinner from '../components/LoadingSpinner';
 import BookCard from '../components/BookCard';
 import './UserDashboard.css';
 
 const UserDashboard = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [books, setBooks] = useState([]);
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -53,6 +54,30 @@ const UserDashboard = () => {
     })
   );
 
+  const unpurchasedBooks = books.filter(book => 
+    !user?.purchasedBooks?.some(purchased => {
+      if (typeof purchased === 'object' && purchased !== null) {
+        return (purchased._id || purchased.id) === book._id;
+      }
+      return purchased === book._id;
+    })
+  );
+
+  const getBookPaymentStatus = (bookId) => {
+    const bookPayments = payments.filter(p => {
+      const pBookId = typeof p.book === 'object' && p.book !== null ? (p.book._id || p.book.id) : p.book;
+      return pBookId === bookId;
+    });
+    
+    if (bookPayments.length === 0) return null;
+    
+    const pendingPayment = bookPayments.find(p => p.status === 'pending');
+    if (pendingPayment) return 'pending';
+    
+    const sorted = [...bookPayments].sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
+    return sorted[0].status;
+  };
+
   return (
     <div className="dashboard-container">
       <div className="dashboard-header">
@@ -91,6 +116,62 @@ const UserDashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* Promotion / Purchase Banner */}
+      {unpurchasedBooks.length > 0 && (() => {
+        const featuredUnpurchased = unpurchasedBooks[0];
+        const status = getBookPaymentStatus(featuredUnpurchased._id);
+        const coverUrl = featuredUnpurchased.coverImage 
+          ? getBackendAssetUrl(featuredUnpurchased.coverImage) 
+          : '/book-cover.jpg';
+          
+        return (
+          <div className="buy-book-banner glass">
+            <img 
+              src={coverUrl} 
+              alt={featuredUnpurchased.title} 
+              className="buy-book-banner-cover" 
+            />
+            <div className="buy-book-banner-content">
+              <span className="buy-book-banner-tag">Unlock Premium Ebook</span>
+              <h2 className="buy-book-banner-title">{featuredUnpurchased.title}</h2>
+              <p className="buy-book-banner-author">
+                by {featuredUnpurchased.author === 'Ayush Pradhan' ? 'KN Jha' : featuredUnpurchased.author}
+              </p>
+              <p className="buy-book-banner-description">{featuredUnpurchased.description}</p>
+              
+              <div className="buy-book-banner-actions">
+                <span className="buy-book-banner-price">₹{featuredUnpurchased.price}</span>
+                
+                {status === 'pending' ? (
+                  <div className="buy-book-status-badge">
+                    ⏳ Payment Verification Pending
+                  </div>
+                ) : status === 'rejected' ? (
+                  <>
+                    <button 
+                      onClick={() => navigate(`/payment/${featuredUnpurchased._id}`)} 
+                      className="btn btn-primary buy-book-banner-btn"
+                    >
+                      Retry Purchase
+                    </button>
+                    <div className="buy-book-status-badge rejected">
+                      ❌ Previous Payment Rejected
+                    </div>
+                  </>
+                ) : (
+                  <button 
+                    onClick={() => navigate(`/payment/${featuredUnpurchased._id}`)} 
+                    className="btn btn-primary buy-book-banner-btn"
+                  >
+                    Buy the Book
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* Referral Link */}
       <div className="referral-section glass">
