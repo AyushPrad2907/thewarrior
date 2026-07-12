@@ -12,12 +12,53 @@ const UserDashboard = () => {
   const [books, setBooks] = useState([]);
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [copied, setCopied] = useState(false);
 
   // UPI IDs States
   const [newUpi, setNewUpi] = useState('');
   const [upiSubmitting, setUpiSubmitting] = useState(false);
   const [upiError, setUpiError] = useState('');
   const [upiSuccess, setUpiSuccess] = useState('');
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(user?.referralLink || '');
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // fallback for older browsers
+      const textarea = document.createElement('textarea');
+      textarea.value = user?.referralLink || '';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  const handleShare = async () => {
+    const shareData = {
+      title: 'Join TheWarrior!',
+      text: `Hey! Check out TheWarrior — use my referral link to sign up and we both benefit! 🚀`,
+      url: user?.referralLink || '',
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        // User cancelled share — no action needed
+        if (err.name !== 'AbortError') {
+          console.error('Share failed:', err);
+        }
+      }
+    } else {
+      // Fallback: copy the link for browsers that don't support Web Share API
+      handleCopyLink();
+    }
+  };
 
   const handleAddUpi = async (e) => {
     e.preventDefault();
@@ -235,13 +276,26 @@ const UserDashboard = () => {
             className="referral-input"
           />
           <button 
-            onClick={() => navigator.clipboard.writeText(user?.referralLink || '')}
-            className="btn btn-primary copy-btn"
+            onClick={handleCopyLink}
+            className={`btn btn-primary copy-btn ${copied ? 'copied' : ''}`}
           >
-            Copy Link
+            {copied ? '✓ Copied!' : '📋 Copy Link'}
+          </button>
+          <button 
+            onClick={handleShare}
+            className="btn share-btn"
+          >
+            <svg className="share-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="18" cy="5" r="3"/>
+              <circle cx="6" cy="12" r="3"/>
+              <circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+            Share
           </button>
         </div>
-        <p className="referral-note">Share this link to earn referrals!</p>
+        <p className="referral-note">Share this link to earn referrals! Spread the word via WhatsApp, Facebook, or any app 🚀</p>
       </div>
 
       {/* UPI IDs Management */}
