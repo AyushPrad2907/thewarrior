@@ -40,16 +40,26 @@ const Success = () => {
   const handleSaveAsImage = async () => {
     if (!receiptRef.current) return;
     try {
+      // Temporarily disable animations and force solid background for clean render
+      receiptRef.current.classList.add('no-animation');
+
       const canvas = await html2canvas(receiptRef.current, {
         backgroundColor: '#111111',
         scale: 2,
         useCORS: true,
       });
+
+      // Restore animations/styles
+      receiptRef.current.classList.remove('no-animation');
+
       const link = document.createElement('a');
       link.download = `TheWarrior_Receipt_${paymentData?.payment?.utrNumber || 'payment'}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
     } catch (err) {
+      if (receiptRef.current) {
+        receiptRef.current.classList.remove('no-animation');
+      }
       console.error('Failed to save receipt:', err);
     }
   };

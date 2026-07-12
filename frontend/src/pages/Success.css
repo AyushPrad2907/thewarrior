@@ -372,3 +372,16 @@
     text-align: center;
   }
 }
+
+/* Disable animations/transitions during html2canvas rendering */
+.receipt-card.no-animation,
+.receipt-card.no-animation * {
+  animation: none !important;
+  transition: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.receipt-card.no-animation {
+  background: #161618 !important; /* solid fallback color for html2canvas */
+}
