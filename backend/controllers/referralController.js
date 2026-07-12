@@ -1,7 +1,7 @@
 const User = require('../models/User');
 const Payment = require('../models/Payment');
 
-const REFERRAL_COMMISSION_RATE = 0.1;
+const REFERRAL_COMMISSION_RATE = 0.15;
 
 // Helper: always compute referral link dynamically from env
 const buildReferralLink = (referralCode) => {
