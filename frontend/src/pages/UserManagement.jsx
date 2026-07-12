@@ -77,24 +77,30 @@ const UserManagement = () => {
         <table>
           <thead>
             <tr>
+              <th>S.No.</th>
               <th>Name</th>
               <th>Email</th>
               <th>Phone</th>
+              <th>Primary UPI ID</th>
               <th>Referral Code</th>
               <th>Purchased Books</th>
+              <th>Commission</th>
               <th>Status</th>
               <th>Joined</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {users.map(user => (
+            {users.map((user, index) => (
               <tr key={user._id}>
+                <td>{(page - 1) * 10 + index + 1}</td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>{user.phone}</td>
+                <td className="upi-id-cell">{user.primaryUpiId || 'N/A'}</td>
                 <td className="referral-code">{user.referralCode}</td>
                 <td>{user.purchasedBooks?.length || 0}</td>
+                <td className="commission-cell">₹{user.commission?.toFixed(2) || '0.00'}</td>
                 <td>
                   <span className={`status-badge ${user.isActive ? 'active' : 'inactive'}`}>
                     {user.isActive ? 'Active' : 'Inactive'}

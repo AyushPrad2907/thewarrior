@@ -27,13 +27,37 @@ exports.getAllUsers = async (req, res) => {
 
     const total = await User.countDocuments(query);
 
+    // Calculate commission and primary UPI ID for each user in the page
+    const usersWithDetails = await Promise.all(
+      users.map(async (user) => {
+        // Find direct referrals (Level 1)
+        const directReferrals = await User.find({ parentUserId: user._id }).select('_id');
+        const directReferralIds = directReferrals.map(r => r._id);
+
+        // Find approved payments for these direct referrals
+        const approvedPayments = await Payment.find({
+          user: { $in: directReferralIds },
+          status: 'approved'
+        });
+
+        // Calculate commission (15% of the book purchase amount)
+        const commission = approvedPayments.reduce((sum, p) => sum + (p.amount * 0.15), 0);
+
+        return {
+          ...user.toObject(),
+          primaryUpiId: user.upiIds && user.upiIds.length > 0 ? user.upiIds[0] : 'N/A',
+          commission: parseFloat(commission.toFixed(2))
+        };
+      })
+    );
+
     res.json({
       success: true,
       count: users.length,
       total,
       page: parseInt(page),
       pages: Math.ceil(total / limit),
-      users
+      users: usersWithDetails
     });
   } catch (error) {
     res.status(500).json({
