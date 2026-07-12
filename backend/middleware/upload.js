@@ -1,5 +1,6 @@
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 
 // Set storage engine
 const storage = multer.diskStorage({
@@ -16,6 +17,11 @@ const storage = multer.diskStorage({
       uploadPath += 'screenshots/';
     } else if (file.fieldname === 'qrCodeImage') {
       uploadPath += 'qrcode/';
+    }
+    
+    // Ensure directory exists dynamically
+    if (!fs.existsSync(uploadPath)) {
+      fs.mkdirSync(uploadPath, { recursive: true });
     }
     
     cb(null, uploadPath);

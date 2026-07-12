@@ -44,6 +44,7 @@ backend/uploads/*
 !backend/uploads/previews/
 !backend/uploads/fullbooks/
 !backend/uploads/qrcode/
+!backend/uploads/screenshots/
 
 # Frontend
 frontend/.vite
