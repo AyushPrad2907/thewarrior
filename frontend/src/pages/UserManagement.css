@@ -47,6 +47,7 @@
 
 .users-table table {
   width: 100%;
+  min-width: 1200px; /* Prevent columns from shrinking and clipping */
   border-collapse: collapse;
 }
 
@@ -164,4 +165,24 @@
   font-family: 'Courier New', monospace;
   color: var(--text-white);
   letter-spacing: 0.5px;
+}
+
+/* Custom scrollbar for users-table container */
+.users-table::-webkit-scrollbar {
+  height: 8px;
+}
+
+.users-table::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+}
+
+.users-table::-webkit-scrollbar-thumb {
+  background: var(--glass-border);
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.users-table::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-gold);
 }
