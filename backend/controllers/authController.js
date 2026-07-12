@@ -13,15 +13,7 @@ const buildReferralLink = (referralCode) => {
 // @access  Public
 exports.signup = async (req, res) => {
   try {
-    const { name, email, phone, password, referralCode, upiId } = req.body;
-
-    // Check if upiId is provided
-    if (!upiId || !upiId.trim()) {
-      return res.status(400).json({
-        success: false,
-        message: 'Please provide a UPI ID'
-      });
-    }
+    const { name, email, phone, password, referralCode } = req.body;
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -61,7 +53,7 @@ exports.signup = async (req, res) => {
       email,
       phone,
       password,
-      upiIds: [upiId.trim()],
+      upiIds: [],
       referralCode: newReferralCode,
       referralLink: buildReferralLink(newReferralCode),
       parentUserId: parentUser ? parentUser._id : null

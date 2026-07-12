@@ -12,7 +12,6 @@ const Signup = () => {
     name: '',
     email: '',
     phone: '',
-    upiId: '',
     password: '',
     confirmPassword: '',
     referralCode: referralCode
@@ -42,11 +41,6 @@ const Signup = () => {
 
     if (formData.password.length < 6) {
       setError('Password must be at least 6 characters');
-      return;
-    }
-
-    if (!formData.upiId || !formData.upiId.trim()) {
-      setError('Please provide a valid UPI ID');
       return;
     }
 
@@ -109,19 +103,6 @@ const Signup = () => {
               onChange={handleChange}
               required
               placeholder="Enter your phone number"
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="upiId">UPI ID</label>
-            <input
-              type="text"
-              id="upiId"
-              name="upiId"
-              value={formData.upiId}
-              onChange={handleChange}
-              required
-              placeholder="Enter your UPI ID (e.g. name@bank)"
             />
           </div>
 
