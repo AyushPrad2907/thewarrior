@@ -13,6 +13,7 @@ const UserDashboard = () => {
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
+  const [dismissedNotifs, setDismissedNotifs] = useState(() => JSON.parse(localStorage.getItem('dismissedApprovalNotifs') || '[]'));
 
   // UPI IDs States
   const [newUpi, setNewUpi] = useState('');
@@ -133,9 +134,23 @@ const UserDashboard = () => {
     }
   };
 
+  const handleDismissNotif = (paymentId) => {
+    const updated = [...dismissedNotifs, paymentId];
+    setDismissedNotifs(updated);
+    localStorage.setItem('dismissedApprovalNotifs', JSON.stringify(updated));
+  };
+
   if (loading) {
     return <LoadingSpinner />;
   }
+
+  const newlyApprovedPayments = payments.filter(p => 
+    p.status === 'approved' && !dismissedNotifs.includes(p._id)
+  );
+
+  const rejectedPaymentsNotDismissed = payments.filter(p => 
+    p.status === 'rejected' && !dismissedNotifs.includes(p._id)
+  );
 
   const purchasedBooks = books.filter(book => 
     user?.purchasedBooks?.some(purchased => {
@@ -176,6 +191,50 @@ const UserDashboard = () => {
         <h1 className="dashboard-title">Welcome, {user?.name}!</h1>
         <p className="dashboard-subtitle">Manage your ebooks and track your purchases</p>
       </div>
+
+      {/* Approval Notification Banners */}
+      {newlyApprovedPayments.length > 0 && (
+        <div className="approval-banners">
+          {newlyApprovedPayments.map(payment => (
+            <div key={payment._id} className="approval-banner glass">
+              <div className="approval-banner-icon">🎉</div>
+              <div className="approval-banner-content">
+                <h4>Payment Approved!</h4>
+                <p>Your payment for <strong>{payment.book?.title || 'your book'}</strong> has been approved. The book is now unlocked in your library!</p>
+              </div>
+              <button 
+                onClick={() => handleDismissNotif(payment._id)}
+                className="approval-banner-dismiss"
+                aria-label="Dismiss notification"
+              >
+                ✕
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Rejection Notification Banners */}
+      {rejectedPaymentsNotDismissed.length > 0 && (
+        <div className="approval-banners">
+          {rejectedPaymentsNotDismissed.map(payment => (
+            <div key={payment._id} className="rejection-banner glass">
+              <div className="approval-banner-icon">❌</div>
+              <div className="approval-banner-content">
+                <h4>Payment Rejected</h4>
+                <p>Your payment for <strong>{payment.book?.title || 'a book'}</strong> was not approved. You can retry the purchase.</p>
+              </div>
+              <button 
+                onClick={() => handleDismissNotif(payment._id)}
+                className="approval-banner-dismiss"
+                aria-label="Dismiss notification"
+              >
+                ✕
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Stats Cards */}
       <div className="stats-grid">

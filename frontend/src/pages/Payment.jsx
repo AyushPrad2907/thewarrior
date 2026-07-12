@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { booksAPI, paymentsAPI } from '../services/api';
 import { QRCodeSVG } from 'qrcode.react';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -11,6 +12,7 @@ const UPI_NAME = 'Implex Cart International';
 const Payment = () => {
   const { bookId } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [book, setBook] = useState(null);
   const [formData, setFormData] = useState({
     utrNumber: '',
@@ -91,8 +93,16 @@ const Payment = () => {
       formDataToSend.append('utrNumber', formData.utrNumber);
       formDataToSend.append('paymentScreenshot', formData.paymentScreenshot);
 
-      await paymentsAPI.submit(formDataToSend);
-      navigate('/success');
+      const response = await paymentsAPI.submit(formDataToSend);
+      navigate('/success', {
+        state: {
+          payment: response.data.payment,
+          bookTitle: book.title,
+          bookAuthor: book.author === 'Ayush Pradhan' ? 'KN Jha' : book.author,
+          bookPrice: book.price,
+          userName: user?.name || 'User',
+        }
+      });
     } catch (error) {
       setError(error.response?.data?.message || 'Payment submission failed');
     } finally {

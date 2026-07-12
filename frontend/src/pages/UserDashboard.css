@@ -599,3 +599,107 @@
     width: 100%;
   }
 }
+
+/* Approval/Rejection Notification Banners */
+.approval-banners {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.approval-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 24px;
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  background: linear-gradient(135deg, rgba(74, 222, 128, 0.08) 0%, rgba(20, 20, 20, 0.9) 100%);
+  border-radius: 12px;
+  animation: bannerSlideIn 0.5s ease;
+  position: relative;
+}
+
+.rejection-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 24px;
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  background: linear-gradient(135deg, rgba(248, 113, 113, 0.08) 0%, rgba(20, 20, 20, 0.9) 100%);
+  border-radius: 12px;
+  animation: bannerSlideIn 0.5s ease;
+  position: relative;
+}
+
+.approval-banner-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.approval-banner-content h4 {
+  color: var(--text-white);
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+}
+
+.approval-banner-content p {
+  color: var(--text-gray);
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.approval-banner-content strong {
+  color: var(--accent-gold);
+}
+
+.approval-banner-dismiss {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--text-gray);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.approval-banner-dismiss:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-white);
+  transform: scale(1.1);
+}
+
+@keyframes bannerSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .approval-banner,
+  .rejection-banner {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .approval-banner-icon {
+    font-size: 26px;
+  }
+
+  .approval-banner-content h4 {
+    font-size: 16px;
+  }
+}
