@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useParams } from 'rea
 import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import WhatsAppButton from './components/WhatsAppButton';
 
 // Pages
 import Landing from './pages/Landing';
@@ -129,6 +130,7 @@ function App() {
             </Routes>
           </main>
           <Footer />
+          <WhatsAppButton />
         </div>
       </Router>
     </AuthProvider>
